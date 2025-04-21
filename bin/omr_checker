@@ -1,0 +1,141 @@
+#!/bin/bash
+
+# OMR Checker Script
+# This script stores the provided file in a unique folder inside inputs,
+# copies the appropriate template, and sets up the output directory structure
+
+# Set the script to exit on error
+set -e
+
+# Default values
+FORMAT="jee"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+OMR_ROOT="$(dirname "$SCRIPT_DIR")"
+STORE_FILE=""
+CHECKSUM=""
+PYTHON_ARGS=""
+
+# Function to display usage information
+usage() {
+    echo "Usage: omr_checker [--store-file FILE_PATH] --checksum CHECKSUM [--format FORMAT] [other_options]"
+    echo "  --store-file       Path to the file to store in a unique folder"
+    echo "  --checksum         Checksum to use for creating unique folder names (required)"
+    echo "  --format           OMR format to use - 'jee' or 'neet' (determines template)"
+    echo "  -h, --help         Display this help message"
+    echo ""
+    echo "All other options will be passed directly to the OMR checker script."
+    exit 1
+}
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --store-file)
+            STORE_FILE="$2"
+            shift 2
+            ;;
+        --checksum)
+            CHECKSUM="$2"
+            shift 2
+            ;;
+        --format)
+            FORMAT="$2"
+            shift 2
+            ;;
+        -h|--help)
+            usage
+            ;;
+        *)
+            # Collect remaining arguments to pass to Python script
+            PYTHON_ARGS="$PYTHON_ARGS $1"
+            shift
+            ;;
+    esac
+done
+
+# Check for required parameters
+if [ -z "$CHECKSUM" ]; then
+    echo "Error: --checksum is required"
+    usage
+fi
+
+# Define input and output directories
+INPUT_DIR="$OMR_ROOT/inputs/$CHECKSUM"
+OUTPUT_DIR="$OMR_ROOT/outputs/$CHECKSUM"
+
+# Delete existing directories if they exist
+if [ -d "$INPUT_DIR" ]; then
+    echo "Removing existing input directory: $INPUT_DIR"
+    rm -rf "$INPUT_DIR"
+fi
+
+if [ -d "$OUTPUT_DIR" ]; then
+    echo "Removing existing output directory: $OUTPUT_DIR"
+    rm -rf "$OUTPUT_DIR"
+fi
+
+# Create fresh directories
+mkdir -p "$INPUT_DIR"
+mkdir -p "$OUTPUT_DIR"
+
+# If a file path is provided, copy it to the input directory
+if [ -n "$STORE_FILE" ] && [ -f "$STORE_FILE" ]; then
+    # Copy the file to input directory with its original filename
+    FILENAME=$(basename "$STORE_FILE")
+    cp "$STORE_FILE" "$INPUT_DIR/$FILENAME"
+    echo "File stored in $INPUT_DIR"
+else
+    if [ -n "$STORE_FILE" ]; then
+        echo "Warning: File '$STORE_FILE' not found or not a regular file"
+    fi
+fi
+
+# Copy template based on format
+TEMPLATE_SOURCE="$OMR_ROOT/templates/$FORMAT.json"
+TEMPLATE_DEST="$INPUT_DIR/template.json"
+
+if [ -f "$TEMPLATE_SOURCE" ]; then
+    cp "$TEMPLATE_SOURCE" "$TEMPLATE_DEST"
+    echo "Using template: $FORMAT"
+else
+    echo "Error: Template for format '$FORMAT' not found at $TEMPLATE_SOURCE"
+    exit 1
+fi
+
+# Define log file path
+LOG_FILE="$OUTPUT_DIR/output.log"
+
+# Construct and execute Python command with output redirected to log file
+PYTHON_CMD="/home/fazil/.local/share/mise/installs/python/3.13.3/bin/python $OMR_ROOT/main.py -i $INPUT_DIR -o $OUTPUT_DIR $PYTHON_ARGS"
+echo "Executing: $PYTHON_CMD"
+echo "Output will be logged to: $LOG_FILE"
+
+# Execute the command and redirect both stdout and stderr to the log file
+$PYTHON_CMD > "$LOG_FILE" 2>&1
+
+# Also log the completion status
+echo "OMR processing completed with exit code: $?" >> "$LOG_FILE"
+
+# Print a message to stdout about where the log is stored
+echo "Processing complete. Log saved to $LOG_FILE"
+
+# Look for the results CSV file and output its contents
+RESULTS_DIR="$OUTPUT_DIR/Results"
+if [ -d "$RESULTS_DIR" ]; then
+    # Find the first CSV file that starts with "Results_" in the Results directory
+    CSV_FILE=$(find "$RESULTS_DIR" -name "Results_*.csv" | head -1)
+    
+    if [ -n "$CSV_FILE" ]; then
+        echo "Found results CSV file: $CSV_FILE"
+        echo "CSV_RESULTS_START"
+        cat "$CSV_FILE"
+        echo "CSV_RESULTS_END"
+    else
+        echo "No Results_*.csv files found in the Results directory: $RESULTS_DIR"
+        ls -la "$RESULTS_DIR"
+    fi
+else
+    echo "Results directory not found at: $RESULTS_DIR"
+fi
+
+exit 0
