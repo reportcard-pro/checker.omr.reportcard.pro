@@ -124,9 +124,10 @@ echo "Output will be logged to: $LOG_FILE"
 
 # Execute the command and redirect both stdout and stderr to the log file
 $PYTHON_CMD > "$LOG_FILE" 2>&1
+COMMAND_STATUS=$?
 
-# Also log the completion status
-echo "OMR processing completed with exit code: $?" >> "$LOG_FILE"
+# Log the completion status
+echo "OMR processing completed with exit code: $COMMAND_STATUS" >> "$LOG_FILE"
 
 # Print a message to stdout about where the log is stored
 echo "Processing complete. Log saved to $LOG_FILE"
@@ -150,16 +151,22 @@ else
     echo "Results directory not found at: $RESULTS_DIR"
 fi
 
-# Cleanup: Delete input and output directories after processing
-echo "Cleaning up temporary directories..."
-if [ -d "$INPUT_DIR" ]; then
-    rm -rf "$INPUT_DIR"
-    echo "Deleted input directory: $INPUT_DIR"
+# Cleanup: Delete input and output directories after processing, but only if command was successful
+if [ $COMMAND_STATUS -eq 0 ]; then
+    echo "Command was successful. Cleaning up temporary directories..."
+    if [ -d "$INPUT_DIR" ]; then
+        rm -rf "$INPUT_DIR"
+        echo "Deleted input directory: $INPUT_DIR"
+    fi
+
+    if [ -d "$OUTPUT_DIR" ]; then
+        rm -rf "$OUTPUT_DIR"
+        echo "Deleted output directory: $OUTPUT_DIR"
+    fi
+else
+    echo "Command failed with status $COMMAND_STATUS. Keeping temporary directories for debugging."
+    echo "Input directory: $INPUT_DIR"
+    echo "Output directory: $OUTPUT_DIR"
 fi
 
-if [ -d "$OUTPUT_DIR" ]; then
-    rm -rf "$OUTPUT_DIR"
-    echo "Deleted output directory: $OUTPUT_DIR"
-fi
-
-exit 0
+exit $COMMAND_STATUS
