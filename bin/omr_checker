@@ -127,18 +127,61 @@ fi
 # Define log file path
 LOG_FILE="$OUTPUT_DIR/output.log"
 
+# Print diagnostic information
+echo "======== ENVIRONMENT DIAGNOSTICS ========"
+echo "OMR_ROOT: $OMR_ROOT"
+echo "INPUT_DIR: $INPUT_DIR"
+echo "OUTPUT_DIR: $OUTPUT_DIR"
+echo "PYTHON_PATH: $PYTHON_PATH"
+echo "User/Group running script: $(id -u -n):$(id -g -n)"
+echo "Permissions on directories:"
+ls -la "$OMR_ROOT/inputs" "$OMR_ROOT/outputs"
+echo "Contents of input directory:"
+ls -la "$INPUT_DIR" || echo "Could not list input directory"
+echo "======== END DIAGNOSTICS ========"
+
 # Use the provided Python path with no fallbacks
 PYTHON_CMD="$PYTHON_PATH $OMR_ROOT/main.py -i $INPUT_DIR -o $OUTPUT_DIR $PYTHON_ARGS"
 
 echo "Executing: $PYTHON_CMD"
 echo "Output will be logged to: $LOG_FILE"
 
-# Execute the command and redirect both stdout and stderr to the log file
-$PYTHON_CMD > "$LOG_FILE" 2>&1
-COMMAND_STATUS=$?
+# Create a direct console output for errors
+echo "Running Python command..."
+echo "Command: $PYTHON_CMD" > "$LOG_FILE"
+echo "Start time: $(date)" >> "$LOG_FILE"
 
-# Log the completion status
-echo "OMR processing completed with exit code: $COMMAND_STATUS" >> "$LOG_FILE"
+# Execute the command and capture the output
+set +e  # Temporarily disable exit on error
+$PYTHON_CMD >> "$LOG_FILE" 2>&1
+COMMAND_STATUS=$?
+set -e  # Re-enable exit on error
+
+echo "OMR processing completed with exit code: $COMMAND_STATUS" | tee -a "$LOG_FILE"
+
+# If command failed, show the log output to stderr
+if [ $COMMAND_STATUS -ne 0 ]; then
+    echo "ERROR: Command failed with status $COMMAND_STATUS" >&2
+    echo "--- Last 50 lines of log file ---" >&2
+    tail -n 50 "$LOG_FILE" >&2
+    echo "--------------------------------" >&2
+
+    # More detailed error diagnostics
+    echo "======== ERROR DIAGNOSTICS ========"
+    echo "Command failed with status: $COMMAND_STATUS"
+    echo "Python command was: $PYTHON_CMD"
+
+    # Check the Python executable
+    echo "Python executable details:"
+    $PYTHON_PATH --version || echo "Could not determine Python version"
+
+    # List directories again to see if anything changed
+    echo "Input directory contents after execution:"
+    ls -la "$INPUT_DIR" || echo "Could not list input directory"
+    echo "Output directory contents after execution:"
+    ls -la "$OUTPUT_DIR" || echo "Could not list output directory"
+    echo "======== END ERROR DIAGNOSTICS ========"
+fi
 
 # Print a message to stdout about where the log is stored
 echo "Processing complete. Log saved to $LOG_FILE"
@@ -178,6 +221,37 @@ else
     echo "Command failed with status $COMMAND_STATUS. Keeping temporary directories for debugging."
     echo "Input directory: $INPUT_DIR"
     echo "Output directory: $OUTPUT_DIR"
+
+    # Create a persistent error log that won't be deleted
+    ERROR_LOG="$OMR_ROOT/error_${CHECKSUM}.log"
+    echo "Creating persistent error log at: $ERROR_LOG"
+    {
+        echo "===== ERROR LOG FOR CHECKSUM: $CHECKSUM ====="
+        echo "Timestamp: $(date)"
+        echo "Command: $PYTHON_CMD"
+        echo "Exit code: $COMMAND_STATUS"
+        echo ""
+        echo "===== ENVIRONMENT ====="
+        echo "OMR_ROOT: $OMR_ROOT"
+        echo "INPUT_DIR: $INPUT_DIR"
+        echo "OUTPUT_DIR: $OUTPUT_DIR"
+        echo "PYTHON_PATH: $PYTHON_PATH"
+        echo "User/Group: $(id -u -n):$(id -g -n)"
+        echo ""
+        echo "===== INPUT DIRECTORY CONTENTS ====="
+        ls -la "$INPUT_DIR" 2>&1
+        echo ""
+        echo "===== OUTPUT DIRECTORY CONTENTS ====="
+        ls -la "$OUTPUT_DIR" 2>&1
+        echo ""
+        echo "===== LOG FILE CONTENTS ====="
+        if [ -f "$LOG_FILE" ]; then
+            cat "$LOG_FILE"
+        else
+            echo "Log file does not exist"
+        fi
+    } > "$ERROR_LOG"
+    echo "Error details saved to: $ERROR_LOG"
 fi
 
 exit $COMMAND_STATUS
