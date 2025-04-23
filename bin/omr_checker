@@ -74,6 +74,17 @@ fi
 INPUT_DIR="$OMR_ROOT/inputs/$CHECKSUM"
 OUTPUT_DIR="$OMR_ROOT/outputs/$CHECKSUM"
 
+# Make sure parent directories exist
+if [ ! -d "$OMR_ROOT/inputs" ]; then
+    echo "Creating parent input directory: $OMR_ROOT/inputs"
+    mkdir -p "$OMR_ROOT/inputs"
+fi
+
+if [ ! -d "$OMR_ROOT/outputs" ]; then
+    echo "Creating parent output directory: $OMR_ROOT/outputs"
+    mkdir -p "$OMR_ROOT/outputs"
+fi
+
 # Delete existing directories if they exist
 if [ -d "$INPUT_DIR" ]; then
     echo "Removing existing input directory: $INPUT_DIR"
