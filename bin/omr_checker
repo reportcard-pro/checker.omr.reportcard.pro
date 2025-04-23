@@ -143,29 +143,37 @@ echo "======== END DIAGNOSTICS ========"
 # Use the provided Python path with no fallbacks
 PYTHON_CMD="$PYTHON_PATH $OMR_ROOT/main.py -i $INPUT_DIR -o $OUTPUT_DIR $PYTHON_ARGS"
 
-# Try to execute xauth to check if it's available
-if command -v xauth >/dev/null 2>&1; then
-    # Wrap the Python command with Xvfb to provide a virtual display (with auth)
-    XVFB_CMD="xvfb-run -a -s '-screen 0 1920x1080x24' $PYTHON_CMD"
-else
-    # If xauth is not available, use xvfb-run with the -n option to skip authentication
-    echo "xauth not found, using xvfb-run without authentication"
-    XVFB_CMD="xvfb-run -n -a -s '-screen 0 1920x1080x24' $PYTHON_CMD"
-fi
+# Run with a virtual X display using direct Xvfb management
+XVFB_DISPLAY=":99"
+XVFB_CMD="Xvfb $XVFB_DISPLAY -screen 0 1920x1080x24 -ac"
+PYTHON_WITH_DISPLAY="DISPLAY=$XVFB_DISPLAY $PYTHON_CMD"
 
-echo "Executing: $XVFB_CMD"
+echo "Starting Xvfb on display $XVFB_DISPLAY..."
+$XVFB_CMD > /dev/null 2>&1 &
+XVFB_PID=$!
+
+# Wait a moment for Xvfb to start
+sleep 2
+
+echo "Executing Python with display $XVFB_DISPLAY: $PYTHON_CMD"
 echo "Output will be logged to: $LOG_FILE"
 
 # Create a direct console output for errors
 echo "Running Python command..."
-echo "Command: $XVFB_CMD" > "$LOG_FILE"
+echo "Command: $PYTHON_WITH_DISPLAY" > "$LOG_FILE"
 echo "Start time: $(date)" >> "$LOG_FILE"
 
 # Execute the command and capture the output
 set +e  # Temporarily disable exit on error
-$XVFB_CMD >> "$LOG_FILE" 2>&1
+eval $PYTHON_WITH_DISPLAY >> "$LOG_FILE" 2>&1
 COMMAND_STATUS=$?
 set -e  # Re-enable exit on error
+
+# Kill Xvfb process
+if [ -n "$XVFB_PID" ]; then
+    echo "Stopping Xvfb (PID: $XVFB_PID)..."
+    kill $XVFB_PID || true
+fi
 
 echo "OMR processing completed with exit code: $COMMAND_STATUS" | tee -a "$LOG_FILE"
 
@@ -240,7 +248,7 @@ else
     {
         echo "===== ERROR LOG FOR CHECKSUM: $CHECKSUM ====="
         echo "Timestamp: $(date)"
-        echo "Command: $XVFB_CMD"
+        echo "Command: DISPLAY=$XVFB_DISPLAY $PYTHON_CMD"
         echo "Exit code: $COMMAND_STATUS"
         echo ""
         echo "===== ENVIRONMENT ====="
@@ -248,6 +256,7 @@ else
         echo "INPUT_DIR: $INPUT_DIR"
         echo "OUTPUT_DIR: $OUTPUT_DIR"
         echo "PYTHON_PATH: $PYTHON_PATH"
+        echo "DISPLAY: $XVFB_DISPLAY"
         echo "User/Group: $(id -u -n):$(id -g -n)"
         echo ""
         echo "===== INPUT DIRECTORY CONTENTS ====="
