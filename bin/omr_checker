@@ -13,11 +13,13 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OMR_ROOT="$(dirname "$SCRIPT_DIR")"
 STORE_FILE=""
 CHECKSUM=""
+PYTHON_PATH=""
 PYTHON_ARGS=""
 
 # Function to display usage information
 usage() {
-    echo "Usage: omr_checker [--store-file FILE_PATH] --checksum CHECKSUM [--format FORMAT] [other_options]"
+    echo "Usage: omr_checker --python-path PYTHON_PATH [--store-file FILE_PATH] --checksum CHECKSUM [--format FORMAT] [other_options]"
+    echo "  --python-path      Path to the Python executable (required)"
     echo "  --store-file       Path to the file to store in a unique folder"
     echo "  --checksum         Checksum to use for creating unique folder names (required)"
     echo "  --format           OMR format to use - 'jee' or 'neet' (determines template)"
@@ -42,6 +44,10 @@ while [[ $# -gt 0 ]]; do
             FORMAT="$2"
             shift 2
             ;;
+        --python-path)
+            PYTHON_PATH="$2"
+            shift 2
+            ;;
         -h|--help)
             usage
             ;;
@@ -56,6 +62,11 @@ done
 # Check for required parameters
 if [ -z "$CHECKSUM" ]; then
     echo "Error: --checksum is required"
+    usage
+fi
+
+if [ -z "$PYTHON_PATH" ]; then
+    echo "Error: --python-path is required"
     usage
 fi
 
@@ -105,8 +116,9 @@ fi
 # Define log file path
 LOG_FILE="$OUTPUT_DIR/output.log"
 
-# Construct and execute Python command with output redirected to log file
-PYTHON_CMD="/home/fazil/.local/share/mise/installs/python/3.13.3/bin/python $OMR_ROOT/main.py -i $INPUT_DIR -o $OUTPUT_DIR $PYTHON_ARGS"
+# Use the provided Python path with no fallbacks
+PYTHON_CMD="$PYTHON_PATH $OMR_ROOT/main.py -i $INPUT_DIR -o $OUTPUT_DIR $PYTHON_ARGS"
+
 echo "Executing: $PYTHON_CMD"
 echo "Output will be logged to: $LOG_FILE"
 
