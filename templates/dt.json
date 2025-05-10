@@ -1,0 +1,191 @@
+{
+  "pageDimensions": [
+    1800,
+    2400
+  ],
+  "bubbleDimensions": [
+    15,
+    15
+  ],
+  "preProcessors": [
+  ],
+  "customLabels": {
+    "rollNumber": [
+      "rollNumber_1",
+      "rollNumber_2",
+      "rollNumber_3",
+      "rollNumber_4",
+      "rollNumber_5",
+      "rollNumber_6",
+      "rollNumber_7",
+      "rollNumber_8",
+      "rollNumber_9",
+      "rollNumber_10"
+    ]
+  },
+  "fieldBlocks": {
+    "rollNumberBlock": {
+      "origin": [
+        95,
+        360
+      ],
+      "bubblesGap": 47,
+      "labelsGap": 47,
+      "fieldLabels": [
+        "rollNumber_1",
+        "rollNumber_2",
+        "rollNumber_3",
+        "rollNumber_4",
+        "rollNumber_5",
+        "rollNumber_6",
+        "rollNumber_7",
+        "rollNumber_8",
+        "rollNumber_9",
+        "rollNumber_10"
+      ],
+      "fieldType": "QTYPE_INT_FROM_1"
+    },
+    "Q1_5Block": {
+      "origin": [185, 975],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q1..5"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q6_10Block": {
+      "origin": [185, 1303],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q6..10"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q11_15Block": {
+      "origin": [185, 1635],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q11..15"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q16_20Block": {
+      "origin": [185, 1967],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q16..20"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q21_25Block": {
+      "origin": [513, 975],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q21..25"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q26_30Block": {
+      "origin": [513, 1303],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q26..30"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q31_35Block": {
+      "origin": [513, 1635],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q31..35"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q36_40Block": {
+      "origin": [513, 1967],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q36..40"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q41_45Block": {
+      "origin": [841, 975],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q41..45"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q46_50Block": {
+      "origin": [841, 1303],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q46..50"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q51_55Block": {
+      "origin": [841, 1635],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q51..55"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q56_60Block": {
+      "origin": [841, 1967],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q56..60"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q61_65Block": {
+      "origin": [1169, 975],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q61..65"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q66_70Block": {
+      "origin": [1169, 1303],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q66..70"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q71_80Block": {
+      "origin": [1169, 1635],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q71..75"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q76_80Block": {
+      "origin": [1169, 1967],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q76..80"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q81_85Block": {
+      "origin": [1501, 975],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q81..85"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q86_90Block": {
+      "origin": [1501, 1303],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q86..90"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q91_95Block": {
+      "origin": [1501, 1635],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q91..95"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "Q96_100Block": {
+      "origin": [1501, 1967],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q96..100"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    }
+  }
+}
+
+
