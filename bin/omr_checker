@@ -225,16 +225,7 @@ fi
 
 # Cleanup: Delete input and output directories after processing, but only if command was successful
 if [ $COMMAND_STATUS -eq 0 ]; then
-    echo "Command was successful. Cleaning up temporary directories..."
-    if [ -d "$INPUT_DIR" ]; then
-        rm -rf "$INPUT_DIR"
-        echo "Deleted input directory: $INPUT_DIR"
-    fi
-
-    if [ -d "$OUTPUT_DIR" ]; then
-        rm -rf "$OUTPUT_DIR"
-        echo "Deleted output directory: $OUTPUT_DIR"
-    fi
+    echo "Command was successful."
 else
     echo "Command failed with status $COMMAND_STATUS. Keeping temporary directories for debugging."
     echo "Input directory: $INPUT_DIR"
