@@ -219,6 +219,7 @@ class FieldBlock:
         # case mapping
         (
             bubble_dimensions,
+            bubble_detection_strategy,
             bubble_values,
             bubbles_gap,
             direction,
@@ -231,6 +232,7 @@ class FieldBlock:
             field_block_object.get,
             [
                 "bubbleDimensions",
+                "bubbleDetectionStrategy",
                 "bubbleValues",
                 "bubblesGap",
                 "direction",
@@ -246,6 +248,7 @@ class FieldBlock:
         )
         self.origin = origin
         self.bubble_dimensions = bubble_dimensions
+        self.bubble_detection_strategy = bubble_detection_strategy
         self.calculate_block_dimensions(
             bubble_dimensions,
             bubble_values,

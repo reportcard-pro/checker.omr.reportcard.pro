@@ -202,6 +202,10 @@ TEMPLATE_SCHEMA = {
                         "bubbleDimensions": two_positive_numbers,
                         "bubblesGap": positive_number,
                         "bubbleValues": ARRAY_OF_STRINGS,
+                        "bubbleDetectionStrategy": {
+                            "type": "string",
+                            "enum": ["strict"],
+                        },
                         "direction": {
                             "type": "string",
                             "enum": ["horizontal", "vertical"],
