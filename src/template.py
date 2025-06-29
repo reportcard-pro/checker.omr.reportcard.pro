@@ -32,6 +32,7 @@ class Template:
             self.global_empty_val,
             self.options,
             self.page_dimensions,
+            self.answer_position,
         ) = map(
             json_object.get,
             [
@@ -43,6 +44,7 @@ class Template:
                 "emptyValue",
                 "options",
                 "pageDimensions",
+                "answerPosition",
             ],
         )
 
@@ -228,6 +230,7 @@ class FieldBlock:
             labels_gap,
             origin,
             self.empty_val,
+            answer_position,
         ) = map(
             field_block_object.get,
             [
@@ -241,6 +244,7 @@ class FieldBlock:
                 "labelsGap",
                 "origin",
                 "emptyValue",
+                "answerPosition",
             ],
         )
         self.parsed_field_labels = parse_fields(
@@ -249,6 +253,8 @@ class FieldBlock:
         self.origin = origin
         self.bubble_dimensions = bubble_dimensions
         self.bubble_detection_strategy = bubble_detection_strategy
+        self.bubbles_gap = bubbles_gap
+        self.answer_position = answer_position
         self.calculate_block_dimensions(
             bubble_dimensions,
             bubble_values,

@@ -9,6 +9,7 @@
   ],
   "preProcessors": [
   ],
+  "answerPosition": "right",
   "customLabels": {
     "rollNumber": [
       "rollNumber_1",
@@ -43,7 +44,8 @@
         "rollNumber_9",
         "rollNumber_10"
       ],
-      "fieldType": "QTYPE_INT_FROM_1"
+      "fieldType": "QTYPE_INT_FROM_1",
+      "answerPosition": "top"
     },
     "Q1_5Block": {
       "origin": [185, 975],

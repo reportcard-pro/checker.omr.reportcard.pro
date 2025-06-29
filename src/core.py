@@ -324,10 +324,46 @@ class ImageInstanceOps:
                                 3,
                             )
 
+                            # Add white background rectangle behind the text
+                            if template.answer_position is not None or field_block.answer_position is not None:
+                                text_size = cv2.getTextSize(str(field_value), cv2.FONT_HERSHEY_SIMPLEX, constants.TEXT_SIZE, int(1 + 3.5 * constants.TEXT_SIZE))[0]
+
+                                # Position text based on field type
+                                if field_block.answer_position == "top" or field_block.answer_position is None and template.answer_position == "top":
+                                    # Position above the field block for integer/numeric types
+                                    text_x = x + box_w // 2 - text_size[0] // 2
+                                    text_y = s[1]
+                                elif field_block.answer_position == "right" or field_block.answer_position is None and template.answer_position == "right":
+                                    # Position to the right of field block for other types
+                                    text_x = s[0] + d[0] + box_w
+                                    text_y = bubble.y + box_h
+                                else:
+                                    raise ValueError(f"Invalid answer position: {field_block.answer_position}")
+
+                                cv2.rectangle(
+                                    final_marked,
+                                    (text_x - 5, text_y - text_size[1] - 5),
+                                    (text_x + text_size[0] + 5, text_y + 5),
+                                    (255, 255, 255),  # White background
+                                    -1,  # Filled rectangle
+                                )
+
+                                # Add light gray border around the white background
+                                cv2.rectangle(
+                                    final_marked,
+                                    (text_x - 5, text_y - text_size[1] - 5),
+                                    (text_x + text_size[0] + 5, text_y + 5),
+                                    (200, 200, 200),  # Light gray border
+                                    2,  # Border thickness
+                                )
+                            else:
+                                text_x = x
+                                text_y = y
+
                             cv2.putText(
                                 final_marked,
                                 str(field_value),
-                                (x, y),
+                                (text_x, text_y),
                                 cv2.FONT_HERSHEY_SIMPLEX,
                                 constants.TEXT_SIZE,
                                 (20, 20, 10),

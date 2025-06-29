@@ -21,6 +21,7 @@
       "rollNumber_8"
     ]
   },
+  "answerPosition": "right",
   "fieldBlocks": {
     "rollNumberBlock": {
       "origin": [
@@ -39,7 +40,8 @@
         "rollNumber_7",
         "rollNumber_8"
       ],
-      "fieldType": "QTYPE_INT_FROM_1"
+      "fieldType": "QTYPE_INT_FROM_1",
+      "answerPosition": "top"
     },
     "001-015-Block": {
       "origin": [145, 518],

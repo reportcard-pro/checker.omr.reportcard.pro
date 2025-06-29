@@ -218,6 +218,10 @@ TEMPLATE_SCHEMA = {
                             "type": "string",
                             "enum": list(FIELD_TYPES.keys()),
                         },
+                        "answerPosition": {
+                            "type": "string",
+                            "enum": ["top", "right"],
+                        },
                     },
                 }
             },
@@ -225,6 +229,11 @@ TEMPLATE_SCHEMA = {
         "emptyValue": {
             "description": "The value to be used in case of empty bubble detected at global level.",
             "type": "string",
+        },
+        "answerPosition": {
+            "description": "The position of the answer label relative to the field block",
+            "type": "string",
+            "enum": ["top", "right"],
         },
     },
 }
