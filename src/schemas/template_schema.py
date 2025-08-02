@@ -235,5 +235,9 @@ TEMPLATE_SCHEMA = {
             "type": "string",
             "enum": ["top", "right"],
         },
+        "drawFieldBlockBoxes": {
+            "description": "Whether to draw the field block boxes in the final output",
+            "type": "boolean",
+        },
     },
 }
