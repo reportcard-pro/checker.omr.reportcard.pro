@@ -22,6 +22,7 @@
     ]
   },
   "answerPosition": "right",
+  "drawFieldBlockBoxes": true,
   "fieldBlocks": {
     "rollNumberBlock": {
       "origin": [

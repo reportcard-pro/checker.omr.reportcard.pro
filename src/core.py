@@ -263,8 +263,17 @@ class ImageInstanceOps:
                 shift = field_block.shift
                 s, d = field_block.origin, field_block.dimensions
                 key = field_block.name[:3]
-                # cv2.rectangle(final_marked,(s[0]+shift,s[1]),(s[0]+shift+d[0],
-                #   s[1]+d[1]),CLR_BLACK,3)
+
+                # Draw field block boxes in final output
+                if template.draw_field_block_boxes:
+                    cv2.rectangle(
+                        final_marked,
+                        (s[0] + shift, s[1]),
+                        (s[0] + shift + d[0], s[1] + d[1]),
+                        constants.CLR_BLACK,
+                        2,
+                    )
+
                 for field_block_bubbles in field_block.traverse_bubbles:
                     # All Black or All White case
                     no_outliers = all_q_std_vals[total_q_strip_no] < global_std_thresh

@@ -10,6 +10,7 @@
   "preProcessors": [
   ],
   "answerPosition": "right",
+  "drawFieldBlockBoxes": true,
   "customLabels": {
     "rollNumber": [
       "rollNumber_1",

@@ -33,6 +33,7 @@ class Template:
             self.options,
             self.page_dimensions,
             self.answer_position,
+            self.draw_field_block_boxes,
         ) = map(
             json_object.get,
             [
@@ -45,6 +46,7 @@ class Template:
                 "options",
                 "pageDimensions",
                 "answerPosition",
+                "drawFieldBlockBoxes",
             ],
         )
 

@@ -39,6 +39,7 @@
     "Q75": ["Q75_1", "Q75_2", "Q75_3", "Q75_4", "Q75_5"]
   },
   "answerPosition": "right",
+  "drawFieldBlockBoxes": true,
   "fieldBlocks": {
     "rollNumberBlock": {
       "origin": [
