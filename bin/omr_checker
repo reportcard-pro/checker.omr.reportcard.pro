@@ -234,7 +234,7 @@ else
     # Create a persistent error log that won't be deleted
     # Sanitize checksum to create a valid filename (replace problematic characters)
     SAFE_CHECKSUM=$(echo "$CHECKSUM" | tr -c '[:alnum:]' '_')
-    ERROR_LOG="$OMR_ROOT/error_${SAFE_CHECKSUM}.log"
+    ERROR_LOG="$OMR_ROOT/errors/${SAFE_CHECKSUM}.log"
     echo "Creating persistent error log at: $ERROR_LOG"
     {
         echo "===== ERROR LOG FOR CHECKSUM: $CHECKSUM ====="
