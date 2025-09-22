@@ -161,6 +161,30 @@ sudo apt-get install -y libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
 sudo apt-get install -y libatlas-base-dev gfortran
 ```
 
+<b>For headless environments and testing:</b>
+
+OMRChecker requires a display to function properly. For headless servers or testing environments, install a virtual display:
+
+```bash
+# Ubuntu/Debian
+sudo apt-get install xvfb
+
+# Arch Linux
+sudo pacman -S xorg-server-xvfb
+
+# CentOS/RHEL/Fedora
+sudo yum install xorg-x11-server-Xvfb  # or dnf install
+```
+
+To run OMRChecker in headless mode:
+```bash
+# Start virtual display
+Xvfb :99 -screen 0 1024x768x24 &
+
+# Run OMRChecker with virtual display
+DISPLAY=:99 python3 main.py
+```
+
 </details>
 
 ### 2. Install project dependencies
