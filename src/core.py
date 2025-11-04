@@ -308,7 +308,7 @@ class ImageInstanceOps:
                             x1, y1 = (bubble.x + field_block.shift, bubble.y)
                             rect = [y1, y1 + box_h, x1, x1 + box_w]
                             bubble_mean_intensity = cv2.mean(img[rect[0] : rect[1], rect[2] : rect[3]])[0]
-                            strict_threshold = per_q_strip_threshold * 0.8
+                            strict_threshold = per_q_strip_threshold * 0.6
                             bubble_is_marked = strict_threshold > bubble_mean_intensity
                         else:
                             bubble_is_marked = (
