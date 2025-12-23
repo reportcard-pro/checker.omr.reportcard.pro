@@ -1,0 +1,142 @@
+{
+  "pageDimensions": [
+    1800,
+    2400
+  ],
+  "bubbleDimensions": [
+    35,
+    35
+  ],
+  "preProcessors": [
+  ],
+  "customLabels": {
+    "rollNumber": [
+      "rollNumber_1",
+      "rollNumber_2"
+    ]
+  },
+  "answerPosition": "right",
+  "drawFieldBlockBoxes": true,
+  "fieldBlocks": {
+    "rollNumberBlock": {
+      "origin": [
+        140,
+        115
+      ],
+      "bubblesGap": 60,
+      "labelsGap": 55 ,
+      "fieldLabels": [
+        "rollNumber_1",
+        "rollNumber_2"
+      ],
+      "fieldType": "QTYPE_INT",
+      "answerPosition": "top"
+    },
+    "sectionPA1Block": {
+      "origin": [580, 180],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q1..5"],
+      "bubblesGap": 56,
+      "labelsGap": 59
+    },
+    "sectionPA2Block": {
+      "origin": [580, 531],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q6..10"],
+      "bubblesGap": 56,
+      "labelsGap": 59
+    },
+    "sectionPA3Block": {
+      "origin": [580, 885],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q11..15"],
+      "bubblesGap": 56,
+      "labelsGap": 59
+    },
+    "sectionPA4Block": {
+      "origin": [580, 1240],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q16..20"],
+      "bubblesGap": 56,
+      "labelsGap": 59
+    },
+    "sectionPA5Block": {
+      "origin": [580, 1595],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q21..25"],
+      "bubblesGap": 56,
+      "labelsGap": 59
+    },
+    "sectionCA1Block": {
+      "origin": [1020, 180],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q26..30"],
+      "bubblesGap": 56,
+      "labelsGap": 59
+    },
+    "sectionCA2Block": {
+      "origin": [1020, 531],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q31..35"],
+      "bubblesGap": 56,
+      "labelsGap": 59
+    },
+    "sectionCA3Block": {
+      "origin": [1020, 885],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q36..40"],
+      "bubblesGap": 56,
+      "labelsGap": 59
+    },
+    "sectionCA4Block": {
+      "origin": [1020, 1240],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q41..45"],
+      "bubblesGap": 56,
+      "labelsGap": 59
+    },
+    "sectionCA5Block": {
+      "origin": [1020, 1595],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q46..50"],
+      "bubblesGap": 56,
+      "labelsGap": 59
+    },
+    "sectionMA1Block": {
+      "origin": [1460, 180],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q51..55"],
+      "bubblesGap": 56,
+      "labelsGap": 59
+    },
+    "sectionMA2Block": {
+      "origin": [1460, 531],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q56..60"],
+      "bubblesGap": 56,
+      "labelsGap": 59
+    },
+    "sectionMA3Block": {
+      "origin": [1460, 885],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q61..65"],
+      "bubblesGap": 56,
+      "labelsGap": 59
+    },
+    "sectionMA4Block": {
+      "origin": [1460, 1240],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q66..70"],
+      "bubblesGap": 56,
+      "labelsGap": 59
+    },
+    "sectionMA5Block": {
+      "origin": [1460, 1595],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q71..75"],
+      "bubblesGap": 56,
+      "labelsGap": 59
+    }
+  }
+}
+
