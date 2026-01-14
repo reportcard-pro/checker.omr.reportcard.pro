@@ -15,14 +15,16 @@ STORE_FILE=""
 CHECKSUM=""
 PYTHON_PATH=""
 PYTHON_ARGS=""
+FIELD_BLOCKS=""
 
 # Function to display usage information
 usage() {
-    echo "Usage: omr_checker --python-path PYTHON_PATH [--store-file FILE_PATH] --checksum CHECKSUM [--format FORMAT] [other_options]"
+    echo "Usage: omr_checker --python-path PYTHON_PATH [--store-file FILE_PATH] --checksum CHECKSUM [--format FORMAT] [--field-blocks JSON] [other_options]"
     echo "  --python-path      Path to the Python executable (required)"
     echo "  --store-file       Path to the file to store in a unique folder"
     echo "  --checksum         Checksum to use for creating unique folder names (required)"
     echo "  --format           OMR format to use - 'jee' or 'neet' (determines template)"
+    echo "  --field-blocks     JSON string of field blocks"
     echo "  -h, --help         Display this help message"
     echo ""
     echo "All other options will be passed directly to the OMR checker script."
@@ -46,6 +48,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --python-path)
             PYTHON_PATH="$2"
+            shift 2
+            ;;
+        --field-blocks)
+            FIELD_BLOCKS="$2"
             shift 2
             ;;
         -h|--help)
@@ -122,6 +128,50 @@ if [ -f "$TEMPLATE_SOURCE" ]; then
 else
     echo "Error: Template for format '$FORMAT' not found at $TEMPLATE_SOURCE"
     exit 1
+fi
+
+# Merge field blocks if provided
+if [ -n "$FIELD_BLOCKS" ]; then
+    echo "Applying field blocks..."
+    $PYTHON_PATH - "$TEMPLATE_DEST" "$FIELD_BLOCKS" << 'EOF'
+import json
+import sys
+
+template_path = sys.argv[1]
+overrides_json = sys.argv[2]
+
+with open(template_path) as f:
+    template = json.load(f)
+
+overrides = json.loads(overrides_json)
+for block_name, block_overrides in overrides.items():
+    if block_name in template.get('fieldBlocks', {}):
+        block = template['fieldBlocks'][block_name]
+        # Handle origin separately to allow partial updates
+        if 'origin' in block_overrides:
+            origin_override = block_overrides['origin']
+            if 'origin' in block:
+                # Merge origin array: only update provided indices (skip None/null values)
+                if isinstance(origin_override, list) and isinstance(block['origin'], list):
+                    merged_origin = block['origin'].copy()
+                    for i, value in enumerate(origin_override):
+                        if i < len(merged_origin) and value is not None:
+                            merged_origin[i] = value
+                    block['origin'] = merged_origin
+                else:
+                    block['origin'] = origin_override
+            else:
+                block['origin'] = origin_override
+            # Remove origin from overrides to avoid double processing
+            block_overrides = {k: v for k, v in block_overrides.items() if k != 'origin'}
+        # Update other properties normally
+        block.update(block_overrides)
+
+with open(template_path, 'w') as f:
+    json.dump(template, f, indent=2)
+
+print(f"Applied {len(overrides)} field blocks")
+EOF
 fi
 
 # Define log file path
