@@ -222,6 +222,19 @@ TEMPLATE_SCHEMA = {
                             "type": "string",
                             "enum": ["top", "right"],
                         },
+                        "answerBoxPadding": {
+                            "type": "array",
+                            "prefixItems": [
+                                positive_integer,
+                                positive_integer,
+                                positive_integer,
+                                positive_integer,
+                            ],
+                            "maxItems": 4,
+                            "minItems": 4,
+                        },
+                        "drawEmptyAnswerBox": {"type": "boolean"},
+                        "opaqueAnswerBox": {"type": "boolean"},
                     },
                 }
             },
@@ -237,6 +250,26 @@ TEMPLATE_SCHEMA = {
         },
         "drawFieldBlockBoxes": {
             "description": "Whether to draw the field block boxes in the final output",
+            "type": "boolean",
+        },
+        "answerBoxPadding": {
+            "description": "Padding [left, top, right, bottom] for answer label boxes",
+            "type": "array",
+            "prefixItems": [
+                positive_integer,
+                positive_integer,
+                positive_integer,
+                positive_integer,
+            ],
+            "maxItems": 4,
+            "minItems": 4,
+        },
+        "drawEmptyAnswerBox": {
+            "description": "Whether to draw a blank box for unanswered questions",
+            "type": "boolean",
+        },
+        "opaqueAnswerBox": {
+            "description": "Whether to make answer box backgrounds fully opaque",
             "type": "boolean",
         },
     },

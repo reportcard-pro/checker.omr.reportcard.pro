@@ -34,6 +34,9 @@ class Template:
             self.page_dimensions,
             self.answer_position,
             self.draw_field_block_boxes,
+            self.answer_box_padding,
+            self.draw_empty_answer_box,
+            self.opaque_answer_box,
         ) = map(
             json_object.get,
             [
@@ -47,6 +50,9 @@ class Template:
                 "pageDimensions",
                 "answerPosition",
                 "drawFieldBlockBoxes",
+                "answerBoxPadding",
+                "drawEmptyAnswerBox",
+                "opaqueAnswerBox",
             ],
         )
 
@@ -171,6 +177,9 @@ class Template:
             "direction": "vertical",
             "emptyValue": self.global_empty_val,
             "bubbleDimensions": self.bubble_dimensions,
+            "answerBoxPadding": self.answer_box_padding,
+            "drawEmptyAnswerBox": self.draw_empty_answer_box,
+            "opaqueAnswerBox": self.opaque_answer_box,
             **field_block_object,
         }
 
@@ -233,6 +242,9 @@ class FieldBlock:
             origin,
             self.empty_val,
             answer_position,
+            self.answer_box_padding,
+            self.draw_empty_answer_box,
+            self.opaque_answer_box,
         ) = map(
             field_block_object.get,
             [
@@ -247,6 +259,9 @@ class FieldBlock:
                 "origin",
                 "emptyValue",
                 "answerPosition",
+                "answerBoxPadding",
+                "drawEmptyAnswerBox",
+                "opaqueAnswerBox",
             ],
         )
         self.parsed_field_labels = parse_fields(

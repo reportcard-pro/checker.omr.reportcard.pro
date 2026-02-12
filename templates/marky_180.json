@@ -24,6 +24,9 @@
     ]
   },
   "answerPosition": "right",
+  "answerBoxPadding": [5, 5, 15, 5],
+  "drawEmptyAnswerBox": true,
+  "opaqueAnswerBox": true,
   "drawFieldBlockBoxes": true,
   "fieldBlocks": {
     "rollNumberBlock": {

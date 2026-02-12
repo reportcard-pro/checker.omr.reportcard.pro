@@ -336,6 +336,7 @@ class ImageInstanceOps:
                             # Add white background rectangle behind the text
                             if template.answer_position is not None or field_block.answer_position is not None:
                                 text_size = cv2.getTextSize(str(field_value), cv2.FONT_HERSHEY_SIMPLEX, constants.TEXT_SIZE, int(1 + 3.5 * constants.TEXT_SIZE))[0]
+                                pad_l, pad_t, pad_r, pad_b = field_block.answer_box_padding or [5, 5, 5, 5]
 
                                 # Position text based on field type
                                 if field_block.answer_position == "top" or field_block.answer_position is None and template.answer_position == "top":
@@ -349,19 +350,30 @@ class ImageInstanceOps:
                                 else:
                                     raise ValueError(f"Invalid answer position: {field_block.answer_position}")
 
+                                box_tl = (text_x - pad_l, text_y - text_size[1] - pad_t)
+                                box_br = (text_x + text_size[0] + pad_r, text_y + pad_b)
+
                                 cv2.rectangle(
                                     final_marked,
-                                    (text_x - 5, text_y - text_size[1] - 5),
-                                    (text_x + text_size[0] + 5, text_y + 5),
+                                    box_tl,
+                                    box_br,
                                     (255, 255, 255),  # White background
                                     -1,  # Filled rectangle
                                 )
+                                if field_block.opaque_answer_box:
+                                    cv2.rectangle(
+                                        transp_layer,
+                                        box_tl,
+                                        box_br,
+                                        (255, 255, 255),
+                                        -1,
+                                    )
 
                                 # Add light gray border around the white background
                                 cv2.rectangle(
                                     final_marked,
-                                    (text_x - 5, text_y - text_size[1] - 5),
-                                    (text_x + text_size[0] + 5, text_y + 5),
+                                    box_tl,
+                                    box_br,
                                     (200, 200, 200),  # Light gray border
                                     2,  # Border thickness
                                 )
@@ -409,6 +421,51 @@ class ImageInstanceOps:
                     if len(detected_bubbles) == 0:
                         field_label = field_block_bubbles[0].field_label
                         omr_response[field_label] = field_block.empty_val
+
+                        # Draw blank box for unantempted questions
+                        if field_block.draw_empty_answer_box and (template.answer_position is not None or field_block.answer_position is not None):
+                            first_bubble = field_block_bubbles[0]
+                            bx, by = (first_bubble.x + field_block.shift, first_bubble.y)
+                            pad_l, pad_t, pad_r, pad_b = field_block.answer_box_padding or [5, 5, 5, 5]
+
+                            # Size to match single-character answer boxes
+                            text_size = cv2.getTextSize("A", cv2.FONT_HERSHEY_SIMPLEX, constants.TEXT_SIZE, int(1 + 3.5 * constants.TEXT_SIZE))[0]
+
+                            if field_block.answer_position == "top" or (field_block.answer_position is None and template.answer_position == "top"):
+                                text_x = bx + box_w // 2 - text_size[0] // 2
+                                text_y = s[1]
+                            elif field_block.answer_position == "right" or (field_block.answer_position is None and template.answer_position == "right"):
+                                text_x = s[0] + d[0] + box_w
+                                text_y = by + box_h
+                            else:
+                                text_x = bx
+                                text_y = by
+
+                            box_tl = (text_x - pad_l, text_y - text_size[1] - pad_t)
+                            box_br = (text_x + text_size[0] + pad_r, text_y + pad_b)
+
+                            cv2.rectangle(
+                                final_marked,
+                                box_tl,
+                                box_br,
+                                (255, 255, 255),
+                                -1,
+                            )
+                            if field_block.opaque_answer_box:
+                                cv2.rectangle(
+                                    transp_layer,
+                                    box_tl,
+                                    box_br,
+                                    (255, 255, 255),
+                                    -1,
+                                )
+                            cv2.rectangle(
+                                final_marked,
+                                box_tl,
+                                box_br,
+                                (200, 200, 200),
+                                2,
+                            )
 
                     if config.outputs.show_image_level >= 5:
                         if key in all_c_box_vals:
