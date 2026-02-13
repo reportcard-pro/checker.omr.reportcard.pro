@@ -6,4 +6,5 @@ TEMPLATE_DEFAULTS = {
     "answerBoxPadding": None,
     "drawEmptyAnswerBox": False,
     "opaqueAnswerBox": False,
+    "bubbleThreshold": 1.0,
 }

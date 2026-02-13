@@ -202,9 +202,10 @@ TEMPLATE_SCHEMA = {
                         "bubbleDimensions": two_positive_numbers,
                         "bubblesGap": positive_number,
                         "bubbleValues": ARRAY_OF_STRINGS,
-                        "bubbleDetectionStrategy": {
-                            "type": "string",
-                            "enum": ["strict"],
+                        "bubbleThreshold": {
+                            "type": "number",
+                            "exclusiveMinimum": 0,
+                            "maximum": 1,
                         },
                         "direction": {
                             "type": "string",
@@ -271,6 +272,12 @@ TEMPLATE_SCHEMA = {
         "opaqueAnswerBox": {
             "description": "Whether to make answer box backgrounds fully opaque",
             "type": "boolean",
+        },
+        "bubbleThreshold": {
+            "description": "Global bubble detection threshold multiplier (0-1). Lower values = fewer false positives.",
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 1,
         },
     },
 }

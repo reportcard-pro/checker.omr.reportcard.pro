@@ -37,6 +37,7 @@ class Template:
             self.answer_box_padding,
             self.draw_empty_answer_box,
             self.opaque_answer_box,
+            self.bubble_threshold,
         ) = map(
             json_object.get,
             [
@@ -53,6 +54,7 @@ class Template:
                 "answerBoxPadding",
                 "drawEmptyAnswerBox",
                 "opaqueAnswerBox",
+                "bubbleThreshold",
             ],
         )
 
@@ -180,6 +182,7 @@ class Template:
             "answerBoxPadding": self.answer_box_padding,
             "drawEmptyAnswerBox": self.draw_empty_answer_box,
             "opaqueAnswerBox": self.opaque_answer_box,
+            "bubbleThreshold": self.bubble_threshold,
             **field_block_object,
         }
 
@@ -232,7 +235,7 @@ class FieldBlock:
         # case mapping
         (
             bubble_dimensions,
-            bubble_detection_strategy,
+            bubble_threshold,
             bubble_values,
             bubbles_gap,
             direction,
@@ -249,7 +252,7 @@ class FieldBlock:
             field_block_object.get,
             [
                 "bubbleDimensions",
-                "bubbleDetectionStrategy",
+                "bubbleThreshold",
                 "bubbleValues",
                 "bubblesGap",
                 "direction",
@@ -269,7 +272,7 @@ class FieldBlock:
         )
         self.origin = origin
         self.bubble_dimensions = bubble_dimensions
-        self.bubble_detection_strategy = bubble_detection_strategy
+        self.bubble_threshold = bubble_threshold if bubble_threshold is not None else 1.0
         self.bubbles_gap = bubbles_gap
         self.answer_position = answer_position
         self.calculate_block_dimensions(

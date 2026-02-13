@@ -303,17 +303,11 @@ class ImageInstanceOps:
                     # TODO: get rid of total_q_box_no
                     detected_bubbles = []
                     for bubble in field_block_bubbles:
-                        # Apply detection strategy based on template configuration
-                        if field_block.bubble_detection_strategy == "strict":
-                            x1, y1 = (bubble.x + field_block.shift, bubble.y)
-                            rect = [y1, y1 + box_h, x1, x1 + box_w]
-                            bubble_mean_intensity = cv2.mean(img[rect[0] : rect[1], rect[2] : rect[3]])[0]
-                            strict_threshold = per_q_strip_threshold * 0.6
-                            bubble_is_marked = strict_threshold > bubble_mean_intensity
-                        else:
-                            bubble_is_marked = (
-                                per_q_strip_threshold > all_q_vals[total_q_box_no]
-                            )
+                        x1, y1 = (bubble.x + field_block.shift, bubble.y)
+                        rect = [y1, y1 + box_h, x1, x1 + box_w]
+                        bubble_mean_intensity = cv2.mean(img[rect[0] : rect[1], rect[2] : rect[3]])[0]
+                        effective_threshold = per_q_strip_threshold * field_block.bubble_threshold
+                        bubble_is_marked = effective_threshold > bubble_mean_intensity
                         total_q_box_no += 1
                         if bubble_is_marked:
                             detected_bubbles.append(bubble)
