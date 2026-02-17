@@ -16,6 +16,7 @@ CHECKSUM=""
 PYTHON_PATH=""
 PYTHON_ARGS=""
 FIELD_BLOCKS=""
+SETTINGS=""
 
 # Function to display usage information
 usage() {
@@ -25,6 +26,7 @@ usage() {
     echo "  --checksum         Checksum to use for creating unique folder names (required)"
     echo "  --format           OMR format to use - 'jee' or 'neet' (determines template)"
     echo "  --field-blocks     JSON string of field blocks"
+    echo "  --settings         JSON string of template-level setting overrides"
     echo "  -h, --help         Display this help message"
     echo ""
     echo "All other options will be passed directly to the OMR checker script."
@@ -52,6 +54,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --field-blocks)
             FIELD_BLOCKS="$2"
+            shift 2
+            ;;
+        --settings)
+            SETTINGS="$2"
             shift 2
             ;;
         -h|--help)
@@ -128,6 +134,30 @@ if [ -f "$TEMPLATE_SOURCE" ]; then
 else
     echo "Error: Template for format '$FORMAT' not found at $TEMPLATE_SOURCE"
     exit 1
+fi
+
+# Merge template-level settings if provided
+if [ -n "$SETTINGS" ]; then
+    echo "Applying template settings..."
+    $PYTHON_PATH - "$TEMPLATE_DEST" "$SETTINGS" << 'SETTINGSEOF'
+import json
+import sys
+
+template_path = sys.argv[1]
+settings_json = sys.argv[2]
+
+with open(template_path) as f:
+    template = json.load(f)
+
+settings = json.loads(settings_json)
+for key, value in settings.items():
+    template[key] = value
+
+with open(template_path, 'w') as f:
+    json.dump(template, f, indent=2)
+
+print(f"Applied {len(settings)} template settings")
+SETTINGSEOF
 fi
 
 # Merge field blocks if provided
