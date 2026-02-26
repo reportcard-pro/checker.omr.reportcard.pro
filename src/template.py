@@ -175,16 +175,17 @@ class Template:
         else:
             field_block_object = {**field_block_object, "fieldType": "__CUSTOM__"}
 
-        return {
+        defaults = {
             "direction": "vertical",
             "emptyValue": self.global_empty_val,
             "bubbleDimensions": self.bubble_dimensions,
-            "answerBoxPadding": self.answer_box_padding,
             "drawEmptyAnswerBox": self.draw_empty_answer_box,
             "opaqueAnswerBox": self.opaque_answer_box,
             "bubbleThreshold": self.bubble_threshold,
-            **field_block_object,
         }
+        if self.answer_box_padding is not None:
+            defaults["answerBoxPadding"] = self.answer_box_padding
+        return {**defaults, **field_block_object}
 
     def validate_parsed_labels(self, field_labels, block_instance):
         parsed_field_labels, block_name = (
