@@ -1,11 +1,12 @@
 """
 
- OMRChecker
+OMRChecker
 
- Author: Udayraj Deshmukh
- Github: https://github.com/Udayraj123
+Author: Udayraj Deshmukh
+Github: https://github.com/Udayraj123
 
 """
+
 from src.constants import FIELD_TYPES
 from src.core import ImageInstanceOps
 from src.logger import logger
@@ -38,6 +39,7 @@ class Template:
             self.draw_empty_answer_box,
             self.opaque_answer_box,
             self.bubble_threshold,
+            self.per_block_threshold,
         ) = map(
             json_object.get,
             [
@@ -55,6 +57,7 @@ class Template:
                 "drawEmptyAnswerBox",
                 "opaqueAnswerBox",
                 "bubbleThreshold",
+                "perBlockThreshold",
             ],
         )
 
@@ -273,7 +276,9 @@ class FieldBlock:
         )
         self.origin = origin
         self.bubble_dimensions = bubble_dimensions
-        self.bubble_threshold = bubble_threshold if bubble_threshold is not None else 1.0
+        self.bubble_threshold = (
+            bubble_threshold if bubble_threshold is not None else 1.0
+        )
         self.bubbles_gap = bubbles_gap
         self.answer_position = answer_position
         self.calculate_block_dimensions(

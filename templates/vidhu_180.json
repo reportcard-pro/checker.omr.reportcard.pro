@@ -8,7 +8,9 @@
     25
   ],
   "bubbleThreshold": 0.85,
+  "perBlockThreshold": true,
   "preProcessors": [
+    {"name": "Binarize", "options": {"method": "normalize", "blockSize": 151}}
   ],
   "customLabels": {
     "testBookletCode": [

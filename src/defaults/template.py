@@ -6,4 +6,5 @@ TEMPLATE_DEFAULTS = {
     "drawEmptyAnswerBox": False,
     "opaqueAnswerBox": False,
     "bubbleThreshold": 1.0,
+    "perBlockThreshold": False,
 }

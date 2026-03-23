@@ -149,11 +149,7 @@ class ImageInstanceOps:
                         right_mean = np.mean(
                             morph_v[
                                 s[1] : s[1] + d[1],
-                                s[0]
-                                + shift
-                                - match_col
-                                + d[0]
-                                + thk : thk
+                                s[0] + shift - match_col + d[0] + thk : thk
                                 + s[0]
                                 + shift
                                 + d[0],
@@ -206,7 +202,9 @@ class ImageInstanceOps:
             # Get mean bubbleValues n other stats
             all_q_vals, all_q_strip_arrs, all_q_std_vals = [], [], []
             total_q_strip_no = 0
+            block_strip_ranges = []
             for field_block in template.field_blocks:
+                block_strip_start = total_q_strip_no
                 box_w, box_h = field_block.bubble_dimensions
                 q_std_vals = []
                 for field_block_bubbles in field_block.traverse_bubbles:
@@ -229,22 +227,34 @@ class ImageInstanceOps:
                     # print(total_q_strip_no, field_block_bubbles[0].field_label, q_std_vals[len(q_std_vals)-1])
                     total_q_strip_no += 1
                 all_q_std_vals.extend(q_std_vals)
+                block_strip_ranges.append((block_strip_start, total_q_strip_no))
 
-            global_std_thresh, _, _ = self.get_global_threshold(
-                all_q_std_vals
-            )  # , "Q-wise Std-dev Plot", plot_show=True, sort_in_plot=True)
-            # plt.show()
-            # hist = getPlotImg()
-            # InteractionUtils.show("StdHist", hist, 0, 1,config=config)
+            if template.per_block_threshold:
+                block_thresholds = []
+                for block_idx, (b_start, b_end) in enumerate(block_strip_ranges):
+                    block_std_vals = all_q_std_vals[b_start:b_end]
+                    block_q_vals = [
+                        v for i in range(b_start, b_end) for v in all_q_strip_arrs[i]
+                    ]
+                    if len(block_q_vals) > 0:
+                        b_std_thresh, _, _ = self.get_global_threshold(block_std_vals)
+                        b_thr, _, _ = self.get_global_threshold(
+                            block_q_vals, looseness=4
+                        )
+                    else:
+                        b_std_thresh = 0
+                        b_thr = constants.GLOBAL_PAGE_THRESHOLD_WHITE
+                    block_thresholds.append((b_std_thresh, b_thr))
+                    logger.info(
+                        f"Block[{template.field_blocks[block_idx].name}] thresholds: \tthr: {round(b_thr, 2)} \tstd_thresh: {round(b_std_thresh, 2)}"
+                    )
+            else:
+                global_std_thresh, _, _ = self.get_global_threshold(all_q_std_vals)
+                global_thr, _, _ = self.get_global_threshold(all_q_vals, looseness=4)
 
-            # Note: Plotting takes Significant times here --> Change Plotting args
-            # to support show_image_level
-            # , "Mean Intensity Histogram",plot_show=True, sort_in_plot=True)
-            global_thr, _, _ = self.get_global_threshold(all_q_vals, looseness=4)
-
-            logger.info(
-                f"Thresholding: \tglobal_thr: {round(global_thr, 2)} \tglobal_std_THR: {round(global_std_thresh, 2)}\t{'(Looks like a Xeroxed OMR)' if (global_thr == 255) else ''}"
-            )
+                logger.info(
+                    f"Thresholding: \tglobal_thr: {round(global_thr, 2)} \tglobal_std_THR: {round(global_std_thresh, 2)}\t{'(Looks like a Xeroxed OMR)' if (global_thr == 255) else ''}"
+                )
             # plt.show()
             # hist = getPlotImg()
             # InteractionUtils.show("StdHist", hist, 0, 1,config=config)
@@ -257,7 +267,9 @@ class ImageInstanceOps:
             #     appendSaveImg(2,hist)
 
             per_omr_threshold_avg, total_q_strip_no, total_q_box_no = 0, 0, 0
-            for field_block in template.field_blocks:
+            for block_idx, field_block in enumerate(template.field_blocks):
+                if template.per_block_threshold:
+                    block_std_thresh, block_thr = block_thresholds[block_idx]
                 block_q_strip_no = 1
                 box_w, box_h = field_block.bubble_dimensions
                 shift = field_block.shift
@@ -276,12 +288,22 @@ class ImageInstanceOps:
 
                 for field_block_bubbles in field_block.traverse_bubbles:
                     # All Black or All White case
-                    no_outliers = all_q_std_vals[total_q_strip_no] < global_std_thresh
+                    effective_std_thresh = (
+                        block_std_thresh
+                        if template.per_block_threshold
+                        else global_std_thresh
+                    )
+                    effective_thr = (
+                        block_thr if template.per_block_threshold else global_thr
+                    )
+                    no_outliers = (
+                        all_q_std_vals[total_q_strip_no] < effective_std_thresh
+                    )
                     # print(total_q_strip_no, field_block_bubbles[0].field_label,
                     #   all_q_std_vals[total_q_strip_no], "no_outliers:", no_outliers)
                     per_q_strip_threshold = self.get_local_threshold(
                         all_q_strip_arrs[total_q_strip_no],
-                        global_thr,
+                        effective_thr,
                         no_outliers,
                         f"Mean Intensity Histogram for {key}.{field_block_bubbles[0].field_label}.{block_q_strip_no}",
                         config.outputs.show_image_level >= 6,
@@ -305,8 +327,12 @@ class ImageInstanceOps:
                     for bubble in field_block_bubbles:
                         x1, y1 = (bubble.x + field_block.shift, bubble.y)
                         rect = [y1, y1 + box_h, x1, x1 + box_w]
-                        bubble_mean_intensity = cv2.mean(img[rect[0] : rect[1], rect[2] : rect[3]])[0]
-                        effective_threshold = per_q_strip_threshold * field_block.bubble_threshold
+                        bubble_mean_intensity = cv2.mean(
+                            img[rect[0] : rect[1], rect[2] : rect[3]]
+                        )[0]
+                        effective_threshold = (
+                            per_q_strip_threshold * field_block.bubble_threshold
+                        )
                         bubble_is_marked = effective_threshold > bubble_mean_intensity
                         total_q_box_no += 1
                         if bubble_is_marked:
@@ -328,21 +354,41 @@ class ImageInstanceOps:
                             )
 
                             # Add white background rectangle behind the text
-                            if template.answer_position is not None or field_block.answer_position is not None:
-                                text_size = cv2.getTextSize(str(field_value), cv2.FONT_HERSHEY_SIMPLEX, constants.TEXT_SIZE, int(1 + 3.5 * constants.TEXT_SIZE))[0]
-                                pad_l, pad_t, pad_r, pad_b = field_block.answer_box_padding or [5, 5, 5, 5]
+                            if (
+                                template.answer_position is not None
+                                or field_block.answer_position is not None
+                            ):
+                                text_size = cv2.getTextSize(
+                                    str(field_value),
+                                    cv2.FONT_HERSHEY_SIMPLEX,
+                                    constants.TEXT_SIZE,
+                                    int(1 + 3.5 * constants.TEXT_SIZE),
+                                )[0]
+                                pad_l, pad_t, pad_r, pad_b = (
+                                    field_block.answer_box_padding or [5, 5, 5, 5]
+                                )
 
                                 # Position text based on field type
-                                if field_block.answer_position == "top" or field_block.answer_position is None and template.answer_position == "top":
+                                if (
+                                    field_block.answer_position == "top"
+                                    or field_block.answer_position is None
+                                    and template.answer_position == "top"
+                                ):
                                     # Position above the field block for integer/numeric types
                                     text_x = x + box_w // 2 - text_size[0] // 2
                                     text_y = s[1]
-                                elif field_block.answer_position == "right" or field_block.answer_position is None and template.answer_position == "right":
+                                elif (
+                                    field_block.answer_position == "right"
+                                    or field_block.answer_position is None
+                                    and template.answer_position == "right"
+                                ):
                                     # Position to the right of field block for other types
                                     text_x = s[0] + d[0] + box_w
                                     text_y = bubble.y + box_h
                                 else:
-                                    raise ValueError(f"Invalid answer position: {field_block.answer_position}")
+                                    raise ValueError(
+                                        f"Invalid answer position: {field_block.answer_position}"
+                                    )
 
                                 box_tl = (text_x - pad_l, text_y - text_size[1] - pad_t)
                                 box_br = (text_x + text_size[0] + pad_r, text_y + pad_b)
@@ -417,18 +463,37 @@ class ImageInstanceOps:
                         omr_response[field_label] = field_block.empty_val
 
                         # Draw blank box for unantempted questions
-                        if field_block.draw_empty_answer_box and (template.answer_position is not None or field_block.answer_position is not None):
+                        if field_block.draw_empty_answer_box and (
+                            template.answer_position is not None
+                            or field_block.answer_position is not None
+                        ):
                             first_bubble = field_block_bubbles[0]
-                            bx, by = (first_bubble.x + field_block.shift, first_bubble.y)
-                            pad_l, pad_t, pad_r, pad_b = field_block.answer_box_padding or [5, 5, 5, 5]
+                            bx, by = (
+                                first_bubble.x + field_block.shift,
+                                first_bubble.y,
+                            )
+                            pad_l, pad_t, pad_r, pad_b = (
+                                field_block.answer_box_padding or [5, 5, 5, 5]
+                            )
 
                             # Size to match single-character answer boxes
-                            text_size = cv2.getTextSize("A", cv2.FONT_HERSHEY_SIMPLEX, constants.TEXT_SIZE, int(1 + 3.5 * constants.TEXT_SIZE))[0]
+                            text_size = cv2.getTextSize(
+                                "A",
+                                cv2.FONT_HERSHEY_SIMPLEX,
+                                constants.TEXT_SIZE,
+                                int(1 + 3.5 * constants.TEXT_SIZE),
+                            )[0]
 
-                            if field_block.answer_position == "top" or (field_block.answer_position is None and template.answer_position == "top"):
+                            if field_block.answer_position == "top" or (
+                                field_block.answer_position is None
+                                and template.answer_position == "top"
+                            ):
                                 text_x = bx + box_w // 2 - text_size[0] // 2
                                 text_y = s[1]
-                            elif field_block.answer_position == "right" or (field_block.answer_position is None and template.answer_position == "right"):
+                            elif field_block.answer_position == "right" or (
+                                field_block.answer_position is None
+                                and template.answer_position == "right"
+                            ):
                                 text_x = s[0] + d[0] + box_w
                                 text_y = by + box_h
                             else:

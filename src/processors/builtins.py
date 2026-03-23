@@ -52,3 +52,29 @@ class GaussianBlur(ImagePreprocessor):
 
     def apply_filter(self, image, _file_path):
         return cv2.GaussianBlur(image, self.kSize, self.sigmaX)
+
+
+class Binarize(ImagePreprocessor):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        options = self.options
+        self.method = options.get("method", "otsu")
+        self.block_size = int(options.get("blockSize", 51))
+        self.c = int(options.get("C", 10))
+
+    def apply_filter(self, image, _file_path):
+        if self.method == "normalize":
+            ksize = self.block_size if self.block_size % 2 == 1 else self.block_size + 1
+            bg = cv2.GaussianBlur(image, (ksize, ksize), 0)
+            return cv2.divide(image, bg, scale=255)
+        if self.method == "adaptive":
+            return cv2.adaptiveThreshold(
+                image,
+                255,
+                cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                cv2.THRESH_BINARY,
+                self.block_size,
+                self.c,
+            )
+        _, binary = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+        return binary

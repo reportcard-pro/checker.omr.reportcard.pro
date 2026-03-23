@@ -70,6 +70,7 @@ TEMPLATE_SCHEMA = {
                     "name": {
                         "type": "string",
                         "enum": [
+                            "Binarize",
                             "CropOnMarkers",
                             "CropPage",
                             "FeatureBasedAlignment",
@@ -81,6 +82,25 @@ TEMPLATE_SCHEMA = {
                 },
                 "required": ["name", "options"],
                 "allOf": [
+                    {
+                        "if": {"properties": {"name": {"const": "Binarize"}}},
+                        "then": {
+                            "properties": {
+                                "options": {
+                                    "type": "object",
+                                    "additionalProperties": False,
+                                    "properties": {
+                                        "method": {
+                                            "type": "string",
+                                            "enum": ["otsu", "adaptive", "normalize"],
+                                        },
+                                        "blockSize": positive_integer,
+                                        "C": positive_integer,
+                                    },
+                                }
+                            }
+                        },
+                    },
                     {
                         "if": {"properties": {"name": {"const": "CropOnMarkers"}}},
                         "then": {
@@ -278,6 +298,10 @@ TEMPLATE_SCHEMA = {
             "type": "number",
             "exclusiveMinimum": 0,
             "maximum": 1,
+        },
+        "perBlockThreshold": {
+            "description": "When true, compute detection thresholds per field block instead of globally across all blocks.",
+            "type": "boolean",
         },
     },
 }
