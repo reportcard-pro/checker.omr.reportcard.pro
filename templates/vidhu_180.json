@@ -9,9 +9,7 @@
   ],
   "bubbleThreshold": 0.85,
   "perBlockThreshold": true,
-  "preProcessors": [
-    {"name": "Binarize", "options": {"method": "normalize", "blockSize": 151}}
-  ],
+  "preProcessors": [],
   "customLabels": {
     "testBookletCode": [
       "testBookletCode_1"
@@ -22,6 +20,10 @@
   },
   "answerPosition": "right",
   "drawFieldBlockBoxes": true,
+  "drawEmptyAnswerBox": false,
+  "opaqueAnswerBox": false,
+  "answerBoxPadding": [0, 0, 0, 0],
+  "normalizeBackground": false,
   "fieldBlocks": {
     "testBookletCodeBlock": {
       "origin": [

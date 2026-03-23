@@ -17,6 +17,7 @@ PYTHON_PATH=""
 PYTHON_ARGS=""
 FIELD_BLOCKS=""
 SETTINGS=""
+NORMALIZE=""
 
 # Function to display usage information
 usage() {
@@ -59,6 +60,10 @@ while [[ $# -gt 0 ]]; do
         --settings)
             SETTINGS="$2"
             shift 2
+            ;;
+        --normalize)
+            NORMALIZE="1"
+            shift
             ;;
         -h|--help)
             usage
@@ -202,6 +207,29 @@ with open(template_path, 'w') as f:
 
 print(f"Applied {len(overrides)} field blocks")
 EOF
+fi
+
+# Append Binarize normalize preprocessor if --normalize is set
+if [ -n "$NORMALIZE" ]; then
+    echo "Appending background normalization preprocessor..."
+    $PYTHON_PATH - "$TEMPLATE_DEST" << 'NORMALIZEEOF'
+import json
+import sys
+
+template_path = sys.argv[1]
+
+with open(template_path) as f:
+    template = json.load(f)
+
+preprocessors = template.get("preProcessors", [])
+preprocessors.append({"name": "Binarize", "options": {"method": "normalize", "blockSize": 151}})
+template["preProcessors"] = preprocessors
+
+with open(template_path, 'w') as f:
+    json.dump(template, f, indent=2)
+
+print("Appended Binarize normalize preprocessor")
+NORMALIZEEOF
 fi
 
 # Define log file path
