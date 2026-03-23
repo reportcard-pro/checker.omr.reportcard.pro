@@ -4,8 +4,8 @@
     2400
   ],
   "bubbleDimensions": [
-    16,
-    16
+    25,
+    25
   ],
   "bubbleThreshold": 0.85,
   "preProcessors": [
@@ -63,10 +63,18 @@
       "bubblesGap": 69,
       "labelsGap": 40
     },
-    "031-045-Block": {
+    "031-044-Block": {
       "origin": [180, 1816],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q31..45"],
+      "fieldLabels": ["Q31..44"],
+      "bubblesGap": 69,
+      "labelsGap": 40
+    },
+    "045-Block": {
+      "origin": [180, 2376],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q45"],
+      "bubbleDimensions": [25, 20],
       "bubblesGap": 69,
       "labelsGap": 40
     },
@@ -84,10 +92,18 @@
       "bubblesGap": 69,
       "labelsGap": 40
     },
-    "076-090-Block": {
+    "076-089-Block": {
       "origin": [610, 1816],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q76..90"],
+      "fieldLabels": ["Q76..89"],
+      "bubblesGap": 69,
+      "labelsGap": 40
+    },
+    "090-Block": {
+      "origin": [610, 2376],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q90"],
+      "bubbleDimensions": [25, 20],
       "bubblesGap": 69,
       "labelsGap": 40
     },
@@ -105,10 +121,18 @@
       "bubblesGap": 69,
       "labelsGap": 40
     },
-    "121-135-Block": {
+    "121-134-Block": {
       "origin": [1038, 1816],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q121..135"],
+      "fieldLabels": ["Q121..134"],
+      "bubblesGap": 69,
+      "labelsGap": 40
+    },
+    "135-Block": {
+      "origin": [1038, 2376],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q135"],
+      "bubbleDimensions": [25, 20],
       "bubblesGap": 69,
       "labelsGap": 40
     },
@@ -126,10 +150,18 @@
       "bubblesGap": 69,
       "labelsGap": 40
     },
-    "166-180-Block": {
+    "166-179-Block": {
       "origin": [1465, 1816],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q166..180"],
+      "fieldLabels": ["Q166..179"],
+      "bubblesGap": 69,
+      "labelsGap": 40
+    },
+    "180-Block": {
+      "origin": [1465, 2376],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q180"],
+      "bubbleDimensions": [25, 20],
       "bubblesGap": 69,
       "labelsGap": 40
     }
