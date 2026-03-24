@@ -23,7 +23,6 @@
   "drawEmptyAnswerBox": false,
   "opaqueAnswerBox": false,
   "answerBoxPadding": [0, 0, 0, 0],
-  "normalizeBackground": false,
   "fieldBlocks": {
     "testBookletCodeBlock": {
       "origin": [
