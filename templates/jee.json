@@ -8,6 +8,7 @@
     15
   ],
   "preProcessors": [
+    {"name": "Binarize", "options": {"method": "normalize"}}
   ],
   "customLabels": {
     "rollNumber": [
@@ -40,7 +41,6 @@
   },
   "answerPosition": "right",
   "drawFieldBlockBoxes": true,
-  "normalizeBackground": true,
   "fieldBlocks": {
     "rollNumberBlock": {
       "origin": [85, 121],
