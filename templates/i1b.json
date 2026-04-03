@@ -45,7 +45,7 @@
   },
   "fieldBlocks": {
     "rollNumberBlock": {
-      "origin": [95, 360],
+      "origin": [95, 100],
       "bubblesGap": 47,
       "labelsGap": 47,
       "fieldLabels": [
@@ -74,7 +74,7 @@
       "answerPosition": "top"
     },
     "qpCodeBlock": {
-      "origin": [95, 700],
+      "origin": [95, 300],
       "bubblesGap": 47,
       "labelsGap": 47,
       "fieldLabels": [
@@ -88,45 +88,45 @@
       "fieldType": "QTYPE_INT",
       "answerPosition": "top"
     },
-    "1A-1-20Block": {
-      "origin": [185, 975],
+    "section1APart1Block": {
+      "origin": [185, 500],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["1A-1..20"],
+      "fieldLabels": ["p1..20"],
       "bubblesGap": 47,
       "labelsGap": 47
     },
-    "1A-21-40Block": {
-      "origin": [513, 975],
+    "section1APart2Block": {
+      "origin": [513, 500],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["1A-21..40"],
+      "fieldLabels": ["p21..40"],
       "bubblesGap": 47,
       "labelsGap": 47
     },
-    "2A-1-20Block": {
-      "origin": [185, 1350],
+    "section2APart1Block": {
+      "origin": [185, 800],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["2A-1..20"],
+      "fieldLabels": ["c1..20"],
       "bubblesGap": 47,
       "labelsGap": 47
     },
-    "2A-21-40Block": {
-      "origin": [513, 1350],
+    "section2APart2Block": {
+      "origin": [513, 800],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["2A-21..40"],
+      "fieldLabels": ["c21..40"],
       "bubblesGap": 47,
       "labelsGap": 47
     },
-    "3A-1-20Block": {
-      "origin": [185, 1725],
+    "section3APart1Block": {
+      "origin": [185, 1100],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["3A-1..20"],
+      "fieldLabels": ["m1..20"],
       "bubblesGap": 47,
       "labelsGap": 47
     },
-    "3A-21-40Block": {
-      "origin": [513, 1725],
+    "section3APart2Block": {
+      "origin": [513, 1100],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["3A-21..40"],
+      "fieldLabels": ["m21..40"],
       "bubblesGap": 47,
       "labelsGap": 47
     }
