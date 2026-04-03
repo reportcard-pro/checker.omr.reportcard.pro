@@ -62,73 +62,73 @@
       "fieldType": "QTYPE_INT",
       "answerPosition": "top"
     },
-    "Q1_5Block": {
+    "1_5Block": {
       "origin": [202, 982],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q1..5"],
+      "fieldLabels": ["1..5"],
       "bubblesGap": 47.9,
       "labelsGap": 92.0
     },
-    "Q6_10Block": {
+    "6_10Block": {
       "origin": [203, 1534],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q6..10"],
+      "fieldLabels": ["6..10"],
       "bubblesGap": 47.0,
       "labelsGap": 93.0
     },
-    "Q11_15Block": {
+    "11_15Block": {
       "origin": [528, 986],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q11..15"],
+      "fieldLabels": ["11..15"],
       "bubblesGap": 47.0,
       "labelsGap": 91.0
     },
-    "Q16_20Block": {
+    "16_20Block": {
       "origin": [531, 1531],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q16..20"],
+      "fieldLabels": ["16..20"],
       "bubblesGap": 46.0,
       "labelsGap": 93.3
     },
-    "Q21_25Block": {
+    "21_25Block": {
       "origin": [850, 989],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q21..25"],
+      "fieldLabels": ["21..25"],
       "bubblesGap": 45.5,
       "labelsGap": 91.0
     },
-    "Q26_30Block": {
+    "26_30Block": {
       "origin": [854, 1534],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q26..30"],
+      "fieldLabels": ["26..30"],
       "bubblesGap": 45.0,
       "labelsGap": 92.4
     },
-    "Q31_35Block": {
+    "31_35Block": {
       "origin": [1169, 990],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q31..35"],
+      "fieldLabels": ["31..35"],
       "bubblesGap": 47.0,
       "labelsGap": 91.2
     },
-    "Q36_40Block": {
+    "36_40Block": {
       "origin": [1172, 1538],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q36..40"],
+      "fieldLabels": ["36..40"],
       "bubblesGap": 46.5,
       "labelsGap": 93.0
     },
-    "Q41_45Block": {
+    "41_45Block": {
       "origin": [1497, 987],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q41..45"],
+      "fieldLabels": ["41..45"],
       "bubblesGap": 47.0,
       "labelsGap": 93.4
     },
-    "Q46_50Block": {
+    "46_50Block": {
       "origin": [1500, 1545],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q46..50"],
+      "fieldLabels": ["46..50"],
       "bubblesGap": 47.3,
       "labelsGap": 93.0
     }

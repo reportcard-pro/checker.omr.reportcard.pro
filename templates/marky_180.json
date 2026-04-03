@@ -53,14 +53,14 @@
     "001-015-Block": {
       "origin": [810, 336],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q1..15"],
+      "fieldLabels": ["1..15"],
       "bubblesGap": 48,
       "labelsGap": 35
     },
     "016-030-Block": {
       "origin": [809, 863],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q16..30"],
+      "fieldLabels": ["16..30"],
       "bubblesGap": 48,
       "labelsGap": 35,
       "bubbleThreshold": 0.9
@@ -68,7 +68,7 @@
     "031-045-Block": {
       "origin": [809, 1388],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q31..45"],
+      "fieldLabels": ["31..45"],
       "bubblesGap": 48,
       "labelsGap": 35,
       "bubbleThreshold": 0.9
@@ -76,14 +76,14 @@
     "046-060-Block": {
       "origin": [1057, 336],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q46..60"],
+      "fieldLabels": ["46..60"],
       "bubblesGap": 48,
       "labelsGap": 35
     },
     "061-075-Block": {
       "origin": [1056, 862],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q61..75"],
+      "fieldLabels": ["61..75"],
       "bubblesGap": 49,
       "labelsGap": 35,
       "bubbleThreshold": 0.9
@@ -91,7 +91,7 @@
     "076-090-Block": {
       "origin": [1057, 1387],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q76..90"],
+      "fieldLabels": ["76..90"],
       "bubblesGap": 48,
       "labelsGap": 35,
       "bubbleThreshold": 0.9
@@ -99,14 +99,14 @@
     "091-105-Block": {
       "origin": [1304, 337],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q91..105"],
+      "fieldLabels": ["91..105"],
       "bubblesGap": 48,
       "labelsGap": 35
     },
     "106-120-Block": {
       "origin": [1304, 863],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q106..120"],
+      "fieldLabels": ["106..120"],
       "bubblesGap": 48,
       "labelsGap": 35,
       "bubbleThreshold": 0.9
@@ -114,7 +114,7 @@
     "121-135-Block": {
       "origin": [1303, 1389],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q121..135"],
+      "fieldLabels": ["121..135"],
       "bubblesGap": 49,
       "labelsGap": 35,
       "bubbleThreshold": 0.9
@@ -122,21 +122,21 @@
     "136-150-Block": {
       "origin": [1551, 337],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q136..150"],
+      "fieldLabels": ["136..150"],
       "bubblesGap": 48,
       "labelsGap": 35
     },
     "151-165-Block": {
       "origin": [1551, 863],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q151..165"],
+      "fieldLabels": ["151..165"],
       "bubblesGap": 48,
       "labelsGap": 35
     },
     "166-180-Block": {
       "origin": [1550, 1390],
       "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["Q166..180"],
+      "fieldLabels": ["166..180"],
       "bubblesGap": 49,
       "labelsGap": 35,
       "bubbleThreshold": 0.9
