@@ -81,86 +81,86 @@
       "fieldType": "QTYPE_MCQ4"
     },
     "section1BPart1Block": {
-      "origin": [100, 1500],
-      "bubblesGap": 40,
-      "labelsGap": 40,
+      "origin": [100, 1504],
+      "bubblesGap": 45.8,
+      "labelsGap": 41.8,
       "fieldLabels": ["1B-1A..1D"],
       "fieldType": "QTYPE_MATRIX"
     },
     "section1BPart2Block": {
-      "origin": [370, 1500],
-      "bubblesGap": 40,
-      "labelsGap": 40,
+      "origin": [376, 1504],
+      "bubblesGap": 46.0,
+      "labelsGap": 41.0,
       "fieldLabels": ["1B-2A..2D"],
       "fieldType": "QTYPE_MATRIX"
     },
     "section1BPart3Block": {
-      "origin": [100, 1700],
-      "bubblesGap": 40,
-      "labelsGap": 40,
+      "origin": [100, 1703],
+      "bubblesGap": 45.2,
+      "labelsGap": 40.1,
       "fieldLabels": ["1B-3A..3D"],
       "fieldType": "QTYPE_MATRIX"
     },
     "section1BPart4Block": {
-      "origin": [370, 1700],
-      "bubblesGap": 40,
-      "labelsGap": 40,
+      "origin": [375, 1701],
+      "bubblesGap": 45.8,
+      "labelsGap": 41.0,
       "fieldLabels": ["1B-4A..4D"],
       "fieldType": "QTYPE_MATRIX"
     },
     "section2BPart1Block": {
-      "origin": [700, 1500],
-      "bubblesGap": 40,
-      "labelsGap": 40,
+      "origin": [699, 1502],
+      "bubblesGap": 45.7,
+      "labelsGap": 41.2,
       "fieldLabels": ["2B-1A..1D"],
       "fieldType": "QTYPE_MATRIX"
     },
     "section2BPart2Block": {
-      "origin": [970, 1500],
-      "bubblesGap": 40,
-      "labelsGap": 40,
+      "origin": [973, 1503],
+      "bubblesGap": 45.1,
+      "labelsGap": 40.2,
       "fieldLabels": ["2B-2A..2D"],
       "fieldType": "QTYPE_MATRIX"
     },
     "section2BPart3Block": {
-      "origin": [700, 1700],
-      "bubblesGap": 40,
-      "labelsGap": 40,
+      "origin": [698, 1700],
+      "bubblesGap": 45.0,
+      "labelsGap": 40.9,
       "fieldLabels": ["2B-3A..3D"],
       "fieldType": "QTYPE_MATRIX"
     },
     "section2BPart4Block": {
-      "origin": [970, 1700],
-      "bubblesGap": 40,
-      "labelsGap": 40,
+      "origin": [971, 1700],
+      "bubblesGap": 45.5,
+      "labelsGap": 40.5,
       "fieldLabels": ["2B-4A..4D"],
       "fieldType": "QTYPE_MATRIX"
     },
     "section3BPart1Block": {
-      "origin": [1290, 1500],
-      "bubblesGap": 40,
-      "labelsGap": 40,
+      "origin": [1290, 1502],
+      "bubblesGap": 46.1,
+      "labelsGap": 41.3,
       "fieldLabels": ["3B-1A..1D"],
       "fieldType": "QTYPE_MATRIX"
     },
     "section3BPart2Block": {
-      "origin": [1560, 1500],
-      "bubblesGap": 40,
-      "labelsGap": 40,
+      "origin": [1567, 1504],
+      "bubblesGap": 45.2,
+      "labelsGap": 40.8,
       "fieldLabels": ["3B-2A..2D"],
       "fieldType": "QTYPE_MATRIX"
     },
     "section3BPart3Block": {
-      "origin": [1290, 1700],
-      "bubblesGap": 40,
-      "labelsGap": 40,
+      "origin": [1291, 1700],
+      "bubblesGap": 45.8,
+      "labelsGap": 41.2,
       "fieldLabels": ["3B-3A..3D"],
       "fieldType": "QTYPE_MATRIX"
     },
     "section3BPart4Block": {
-      "origin": [1560, 1700],
-      "bubblesGap": 40,
-      "labelsGap": 40,
+      "origin": [1567, 1700],
+      "bubblesGap": 45.0,
+      "labelsGap": 40.9,
       "fieldLabels": ["3B-4A..4D"],
       "fieldType": "QTYPE_MATRIX"
     },
