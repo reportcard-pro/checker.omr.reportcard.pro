@@ -1,0 +1,134 @@
+{
+  "pageDimensions": [
+    1800,
+    2400
+  ],
+  "bubbleDimensions": [
+    15,
+    15
+  ],
+  "preProcessors": [
+  ],
+  "answerPosition": "right",
+  "drawFieldBlockBoxes": true,
+  "customLabels": {
+    "rollNumber": [
+      "rollNumber_1",
+      "rollNumber_2",
+      "rollNumber_3",
+      "rollNumber_4",
+      "rollNumber_5",
+      "rollNumber_6",
+      "rollNumber_7",
+      "rollNumber_8",
+      "rollNumber_9",
+      "rollNumber_10",
+      "rollNumber_11",
+      "rollNumber_12",
+      "rollNumber_13",
+      "rollNumber_14",
+      "rollNumber_15",
+      "rollNumber_16",
+      "rollNumber_17",
+      "rollNumber_18",
+      "rollNumber_19",
+      "rollNumber_20"
+    ],
+    "qpCode": [
+      "qpCode_1",
+      "qpCode_2",
+      "qpCode_3",
+      "qpCode_4",
+      "qpCode_5",
+      "qpCode_6"
+    ]
+  },
+  "fieldBlocks": {
+    "rollNumberBlock": {
+      "origin": [95, 360],
+      "bubblesGap": 47,
+      "labelsGap": 47,
+      "fieldLabels": [
+        "rollNumber_1",
+        "rollNumber_2",
+        "rollNumber_3",
+        "rollNumber_4",
+        "rollNumber_5",
+        "rollNumber_6",
+        "rollNumber_7",
+        "rollNumber_8",
+        "rollNumber_9",
+        "rollNumber_10",
+        "rollNumber_11",
+        "rollNumber_12",
+        "rollNumber_13",
+        "rollNumber_14",
+        "rollNumber_15",
+        "rollNumber_16",
+        "rollNumber_17",
+        "rollNumber_18",
+        "rollNumber_19",
+        "rollNumber_20"
+      ],
+      "fieldType": "QTYPE_INT",
+      "answerPosition": "top"
+    },
+    "qpCodeBlock": {
+      "origin": [95, 700],
+      "bubblesGap": 47,
+      "labelsGap": 47,
+      "fieldLabels": [
+        "qpCode_1",
+        "qpCode_2",
+        "qpCode_3",
+        "qpCode_4",
+        "qpCode_5",
+        "qpCode_6"
+      ],
+      "fieldType": "QTYPE_INT",
+      "answerPosition": "top"
+    },
+    "1A-1-20Block": {
+      "origin": [185, 975],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["1A-1..20"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "1A-21-40Block": {
+      "origin": [513, 975],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["1A-21..40"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "2A-1-20Block": {
+      "origin": [185, 1350],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["2A-1..20"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "2A-21-40Block": {
+      "origin": [513, 1350],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["2A-21..40"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "3A-1-20Block": {
+      "origin": [185, 1725],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["3A-1..20"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    },
+    "3A-21-40Block": {
+      "origin": [513, 1725],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["3A-21..40"],
+      "bubblesGap": 47,
+      "labelsGap": 47
+    }
+  }
+}
