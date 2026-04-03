@@ -14,4 +14,4 @@ FIELD_STRING_TYPE = {
     "pattern": "^([^\\.]+|(?:[a-zA-Z][a-zA-Z0-9]*|\\d[a-zA-Z])-?\\d+\\.{2,3}\\d+)$",
 }
 
-FIELD_STRING_REGEX_GROUPS = r"([^\.\d]+)(\d+)\.{2,3}(\d+)"
+FIELD_STRING_REGEX_GROUPS = r"([a-zA-Z0-9]+-?)(\d+)\.{2,3}(\d+)"

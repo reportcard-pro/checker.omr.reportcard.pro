@@ -1,11 +1,12 @@
 """
 
- OMRChecker
+OMRChecker
 
- Author: Udayraj Deshmukh
- Github: https://github.com/Udayraj123
+Author: Udayraj Deshmukh
+Github: https://github.com/Udayraj123
 
 """
+
 from dotmap import DotMap
 
 # Filenames
@@ -38,8 +39,26 @@ FIELD_TYPES = {
         "direction": "horizontal",
     },
     "QTYPE_NUMERIC": {
-        "bubbleValues": ["/", ".", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-"],
+        "bubbleValues": [
+            "/",
+            ".",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "-",
+        ],
         "direction": "vertical",
+    },
+    "QTYPE_DIGIT": {
+        "bubbleValues": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+        "direction": "horizontal",
     },
     #
     # You can create and append custom field types here-

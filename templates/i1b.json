@@ -12,71 +12,13 @@
   "answerPosition": "right",
   "drawFieldBlockBoxes": true,
   "customLabels": {
-    "rollNumber": [
-      "rollNumber_1",
-      "rollNumber_2",
-      "rollNumber_3",
-      "rollNumber_4",
-      "rollNumber_5",
-      "rollNumber_6",
-      "rollNumber_7",
-      "rollNumber_8",
-      "rollNumber_9",
-      "rollNumber_10",
-      "rollNumber_11",
-      "rollNumber_12",
-      "rollNumber_13",
-      "rollNumber_14",
-      "rollNumber_15",
-      "rollNumber_16",
-      "rollNumber_17",
-      "rollNumber_18",
-      "rollNumber_19",
-      "rollNumber_20"
-    ],
-    "qpCode": [
-      "qpCode_1",
-      "qpCode_2",
-      "qpCode_3",
-      "qpCode_4",
-      "qpCode_5",
-      "qpCode_6"
-    ]
+    "qpCode": ["qpCode_1", "qpCode_2", "qpCode_3", "qpCode_4", "qpCode_5", "qpCode_6"]
   },
   "fieldBlocks": {
-    "rollNumberBlock": {
-      "origin": [95, 100],
-      "bubblesGap": 47,
-      "labelsGap": 47,
-      "fieldLabels": [
-        "rollNumber_1",
-        "rollNumber_2",
-        "rollNumber_3",
-        "rollNumber_4",
-        "rollNumber_5",
-        "rollNumber_6",
-        "rollNumber_7",
-        "rollNumber_8",
-        "rollNumber_9",
-        "rollNumber_10",
-        "rollNumber_11",
-        "rollNumber_12",
-        "rollNumber_13",
-        "rollNumber_14",
-        "rollNumber_15",
-        "rollNumber_16",
-        "rollNumber_17",
-        "rollNumber_18",
-        "rollNumber_19",
-        "rollNumber_20"
-      ],
-      "fieldType": "QTYPE_INT",
-      "answerPosition": "top"
-    },
     "qpCodeBlock": {
-      "origin": [95, 300],
-      "bubblesGap": 47,
-      "labelsGap": 47,
+      "origin": [1064, 160],
+      "bubblesGap": 41.3,
+      "labelsGap": 45.4,
       "fieldLabels": [
         "qpCode_1",
         "qpCode_2",
@@ -88,47 +30,76 @@
       "fieldType": "QTYPE_INT",
       "answerPosition": "top"
     },
+    "rollNumberBlock": {
+      "origin": [100, 162],
+      "bubblesGap": 40.8,
+      "labelsGap": 45.9,
+      "fieldLabels": ["rollNumber_1", "rollNumber_2", "rollNumber_3", "rollNumber_4", "rollNumber_5", "rollNumber_6", "rollNumber_7", "rollNumber_8", "rollNumber_9", "rollNumber_10", "rollNumber_11", "rollNumber_12", "rollNumber_13", "rollNumber_14", "rollNumber_15", "rollNumber_16", "rollNumber_17", "rollNumber_18", "rollNumber_19", "rollNumber_20"],
+      "fieldType": "QTYPE_INT",
+      "answerPosition": "top"
+    },
     "section1APart1Block": {
-      "origin": [185, 500],
-      "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["p1..20"],
-      "bubblesGap": 47,
-      "labelsGap": 47
+      "origin": [100, 630],
+      "bubblesGap": 47.0,
+      "labelsGap": 41.0,
+      "fieldLabels": ["1A-1..20"],
+      "fieldType": "QTYPE_MCQ4"
     },
     "section1APart2Block": {
-      "origin": [513, 500],
-      "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["p21..40"],
-      "bubblesGap": 47,
-      "labelsGap": 47
+      "origin": [422, 630],
+      "bubblesGap": 47.0,
+      "labelsGap": 40.8,
+      "fieldLabels": ["1A-21..40"],
+      "fieldType": "QTYPE_MCQ4"
     },
     "section2APart1Block": {
-      "origin": [185, 800],
-      "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["c1..20"],
-      "bubblesGap": 47,
-      "labelsGap": 47
-    },
-    "section2APart2Block": {
-      "origin": [513, 800],
-      "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["c21..40"],
-      "bubblesGap": 47,
-      "labelsGap": 47
+      "origin": [699, 632],
+      "bubblesGap": 47.0,
+      "labelsGap": 40.7,
+      "fieldLabels": ["2A-1..20"],
+      "fieldType": "QTYPE_MCQ4"
     },
     "section3APart1Block": {
-      "origin": [185, 1100],
-      "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["m1..20"],
-      "bubblesGap": 47,
-      "labelsGap": 47
+      "origin": [1020, 633],
+      "bubblesGap": 45.5,
+      "labelsGap": 40.6,
+      "fieldLabels": ["3A-1..20"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section2APart2Block": {
+      "origin": [1290, 630],
+      "bubblesGap": 47.0,
+      "labelsGap": 40.8,
+      "fieldLabels": ["2A-21..40"],
+      "fieldType": "QTYPE_MCQ4"
     },
     "section3APart2Block": {
-      "origin": [513, 1100],
-      "fieldType": "QTYPE_MCQ4",
-      "fieldLabels": ["m21..40"],
-      "bubblesGap": 47,
-      "labelsGap": 47
+      "origin": [1615, 632],
+      "bubblesGap": 46.0,
+      "labelsGap": 40.7,
+      "fieldLabels": ["3A-21..40"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section1CBlock": {
+      "origin": [141, 1925],
+      "bubblesGap": 46.0,
+      "labelsGap": 40.0,
+      "fieldLabels": ["1C-1..10"],
+      "fieldType": "QTYPE_DIGIT"
+    },
+    "section2CBlock": {
+      "origin": [739, 1924],
+      "bubblesGap": 46.0,
+      "labelsGap": 40.0,
+      "fieldLabels": ["2C-1..10"],
+      "fieldType": "QTYPE_DIGIT"
+    },
+    "section3CBlock": {
+      "origin": [1332, 1923],
+      "bubblesGap": 45.8,
+      "labelsGap": 39.8,
+      "fieldLabels": ["3C-1..10"],
+      "fieldType": "QTYPE_DIGIT"
     }
   }
 }
