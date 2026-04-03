@@ -60,6 +60,14 @@ FIELD_TYPES = {
         "bubbleValues": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
         "direction": "horizontal",
     },
+    "QTYPE_MATRIX": {
+        "bubbleValues": ["P", "Q", "R", "S", "T"],
+        "direction": "horizontal",
+    },
+    "QTYPE_MATRIX": {
+        "bubbleValues": ["P", "Q", "R", "S", "T"],
+        "direction": "horizontal",
+    },
     #
     # You can create and append custom field types here-
     #

@@ -85,17 +85,42 @@ def parse_fields(key, fields):
 
 def parse_field_string(field_string):
     if "." in field_string:
-        field_prefix, start, end = re.findall(FIELD_STRING_REGEX_GROUPS, field_string)[
-            0
-        ]
-        start, end = int(start), int(end)
-        if start >= end:
+        parts = re.findall(FIELD_STRING_REGEX_GROUPS, field_string)[0]
+        field_prefix, start, end = parts[0], parts[1], parts[2]
+
+        def parse_label(label):
+            m = re.match(r"^(\d+)([A-Z]?)$", label)
+            if m:
+                return int(m.group(1)), m.group(2)
+            return None, None
+
+        start_num, start_letter = parse_label(start)
+        end_num, end_letter = parse_label(end)
+
+        if start_num is None:
+            raise Exception(f"Invalid field label format: '{field_string}'")
+
+        # Same number with different letters (e.g., 1A..1D)
+        if start_num == end_num and start_letter and end_letter:
+            letters = [chr(c) for c in range(ord(start_letter), ord(end_letter) + 1)]
+            return [f"{field_prefix}{start_num}{letter}" for letter in letters]
+
+        # Both number and letter differ (e.g., 1A..4D) - expand 2D grid
+        if start_letter and end_letter and start_num != end_num:
+            result = []
+            for n in range(start_num, end_num + 1):
+                for letter in [
+                    chr(c) for c in range(ord(start_letter), ord(end_letter) + 1)
+                ]:
+                    result.append(f"{field_prefix}{n}{letter}")
+            return result
+
+        # Numeric range only
+        if start_num >= (end_num if end_num else start_num):
             raise Exception(
                 f"Invalid range in fields string: '{field_string}', start: {start} is not less than end: {end}"
             )
-        return [
-            f"{field_prefix}{field_number}" for field_number in range(start, end + 1)
-        ]
+        return [f"{field_prefix}{n}" for n in range(start_num, end_num + 1)]
     else:
         return [field_string]
 

@@ -80,6 +80,90 @@
       "fieldLabels": ["3A-21..40"],
       "fieldType": "QTYPE_MCQ4"
     },
+    "section1BPart1Block": {
+      "origin": [100, 1500],
+      "bubblesGap": 40,
+      "labelsGap": 40,
+      "fieldLabels": ["1B-1A..1D"],
+      "fieldType": "QTYPE_MATRIX"
+    },
+    "section1BPart2Block": {
+      "origin": [370, 1500],
+      "bubblesGap": 40,
+      "labelsGap": 40,
+      "fieldLabels": ["1B-2A..2D"],
+      "fieldType": "QTYPE_MATRIX"
+    },
+    "section1BPart3Block": {
+      "origin": [100, 1700],
+      "bubblesGap": 40,
+      "labelsGap": 40,
+      "fieldLabels": ["1B-3A..3D"],
+      "fieldType": "QTYPE_MATRIX"
+    },
+    "section1BPart4Block": {
+      "origin": [370, 1700],
+      "bubblesGap": 40,
+      "labelsGap": 40,
+      "fieldLabels": ["1B-4A..4D"],
+      "fieldType": "QTYPE_MATRIX"
+    },
+    "section2BPart1Block": {
+      "origin": [700, 1500],
+      "bubblesGap": 40,
+      "labelsGap": 40,
+      "fieldLabels": ["2B-1A..1D"],
+      "fieldType": "QTYPE_MATRIX"
+    },
+    "section2BPart2Block": {
+      "origin": [970, 1500],
+      "bubblesGap": 40,
+      "labelsGap": 40,
+      "fieldLabels": ["2B-2A..2D"],
+      "fieldType": "QTYPE_MATRIX"
+    },
+    "section2BPart3Block": {
+      "origin": [700, 1700],
+      "bubblesGap": 40,
+      "labelsGap": 40,
+      "fieldLabels": ["2B-3A..3D"],
+      "fieldType": "QTYPE_MATRIX"
+    },
+    "section2BPart4Block": {
+      "origin": [970, 1700],
+      "bubblesGap": 40,
+      "labelsGap": 40,
+      "fieldLabels": ["2B-4A..4D"],
+      "fieldType": "QTYPE_MATRIX"
+    },
+    "section3BPart1Block": {
+      "origin": [1290, 1500],
+      "bubblesGap": 40,
+      "labelsGap": 40,
+      "fieldLabels": ["3B-1A..1D"],
+      "fieldType": "QTYPE_MATRIX"
+    },
+    "section3BPart2Block": {
+      "origin": [1560, 1500],
+      "bubblesGap": 40,
+      "labelsGap": 40,
+      "fieldLabels": ["3B-2A..2D"],
+      "fieldType": "QTYPE_MATRIX"
+    },
+    "section3BPart3Block": {
+      "origin": [1290, 1700],
+      "bubblesGap": 40,
+      "labelsGap": 40,
+      "fieldLabels": ["3B-3A..3D"],
+      "fieldType": "QTYPE_MATRIX"
+    },
+    "section3BPart4Block": {
+      "origin": [1560, 1700],
+      "bubblesGap": 40,
+      "labelsGap": 40,
+      "fieldLabels": ["3B-4A..4D"],
+      "fieldType": "QTYPE_MATRIX"
+    },
     "section1CBlock": {
       "origin": [141, 1925],
       "bubblesGap": 46.0,
