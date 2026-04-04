@@ -12,6 +12,7 @@
   "answerPosition": "right",
   "drawFieldBlockBoxes": true,
   "customLabels": {
+    "rollNumber": ["rollNumber_1", "rollNumber_2", "rollNumber_3", "rollNumber_4", "rollNumber_5", "rollNumber_6", "rollNumber_7", "rollNumber_8", "rollNumber_9", "rollNumber_10", "rollNumber_11", "rollNumber_12", "rollNumber_13", "rollNumber_14", "rollNumber_15", "rollNumber_16", "rollNumber_17", "rollNumber_18", "rollNumber_19", "rollNumber_20"],
     "qpCode": ["qpCode_1", "qpCode_2", "qpCode_3", "qpCode_4", "qpCode_5", "qpCode_6"]
   },
   "fieldBlocks": {
