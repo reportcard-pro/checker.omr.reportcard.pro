@@ -1,0 +1,210 @@
+{
+  "pageDimensions": [
+    1800,
+    2400
+  ],
+  "bubbleDimensions": [
+    15,
+    15
+  ],
+  "preProcessors": [
+  ],
+  "answerPosition": "right",
+  "drawFieldBlockBoxes": true,
+  "customLabels": {
+    "qpCode": ["qpCode_1", "qpCode_2", "qpCode_3", "qpCode_4", "qpCode_5", "qpCode_6"]
+  },
+  "fieldBlocks": {
+    "qpCodeBlock": {
+      "origin": [1064, 169],
+      "bubblesGap": 41.1,
+      "labelsGap": 46.4,
+      "fieldLabels": [
+        "qpCode_1",
+        "qpCode_2",
+        "qpCode_3",
+        "qpCode_4",
+        "qpCode_5",
+        "qpCode_6"
+      ],
+      "fieldType": "QTYPE_INT",
+      "answerPosition": "top"
+    },
+    "rollNumberBlock": {
+      "origin": [100, 169],
+      "bubblesGap": 40.8,
+      "labelsGap": 45.9,
+      "fieldLabels": ["rollNumber_1", "rollNumber_2", "rollNumber_3", "rollNumber_4", "rollNumber_5", "rollNumber_6", "rollNumber_7", "rollNumber_8", "rollNumber_9", "rollNumber_10", "rollNumber_11", "rollNumber_12", "rollNumber_13", "rollNumber_14", "rollNumber_15", "rollNumber_16", "rollNumber_17", "rollNumber_18", "rollNumber_19", "rollNumber_20"],
+      "fieldType": "QTYPE_INT",
+      "answerPosition": "top"
+    },
+    "section1Part1Block": {
+      "origin": [108, 640],
+      "bubblesGap": 46.1,
+      "labelsGap": 40.0,
+      "fieldLabels": ["S1-1..15"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section1Part2Block": {
+      "origin": [429, 639],
+      "bubblesGap": 46.1,
+      "labelsGap": 40.2,
+      "fieldLabels": ["S1-16..30"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section1Part3Block": {
+      "origin": [703, 641],
+      "bubblesGap": 46.0,
+      "labelsGap": 40.1,
+      "fieldLabels": ["S1-31..45"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section1Part4Block": {
+      "origin": [1027, 641],
+      "bubblesGap": 46.0,
+      "labelsGap": 40.1,
+      "fieldLabels": ["S1-46..60"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section1Part5Block": {
+      "origin": [1298, 640],
+      "bubblesGap": 46.2,
+      "labelsGap": 40.4,
+      "fieldLabels": ["S1-61..75"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section1Part6Block": {
+      "origin": [1620, 641],
+      "bubblesGap": 45.9,
+      "labelsGap": 40.3,
+      "fieldLabels": ["S1-76..90"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section2Part1Block": {
+      "origin": [112, 1272],
+      "bubblesGap": 45.8,
+      "labelsGap": 40.2,
+      "fieldLabels": ["S2-1..10"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section2Part2Block": {
+      "origin": [418, 1272],
+      "bubblesGap": 46.0,
+      "labelsGap": 40.2,
+      "fieldLabels": ["S2-11..20"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section2Part3Block": {
+      "origin": [697, 1272],
+      "bubblesGap": 46.0,
+      "labelsGap": 40.0,
+      "fieldLabels": ["S2-21..30"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section2Part4Block": {
+      "origin": [1024, 1273],
+      "bubblesGap": 45.7,
+      "labelsGap": 39.9,
+      "fieldLabels": ["S2-31..40"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section2Part5Block": {
+      "origin": [1292, 1272],
+      "bubblesGap": 46.1,
+      "labelsGap": 40.0,
+      "fieldLabels": ["S2-41..50"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section2Part6Block": {
+      "origin": [1611, 1273],
+      "bubblesGap": 45.6,
+      "labelsGap": 40.0,
+      "fieldLabels": ["S2-51..60"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section3Part1Block": {
+      "origin": [112, 1708],
+      "bubblesGap": 45.8,
+      "labelsGap": 39.6,
+      "fieldLabels": ["S3-1..10"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section3Part2Block": {
+      "origin": [418, 1707],
+      "bubblesGap": 45.8,
+      "labelsGap": 39.6,
+      "fieldLabels": ["S3-11..20"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section3Part3Block": {
+      "origin": [697, 1707],
+      "bubblesGap": 45.9,
+      "labelsGap": 39.7,
+      "fieldLabels": ["S3-21..30"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section3Part4Block": {
+      "origin": [1025, 1705],
+      "bubblesGap": 45.4,
+      "labelsGap": 39.9,
+      "fieldLabels": ["S3-31..40"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section3Part5Block": {
+      "origin": [1293, 1707],
+      "bubblesGap": 45.7,
+      "labelsGap": 39.8,
+      "fieldLabels": ["S3-41..50"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section3Part6Block": {
+      "origin": [1611, 1707],
+      "bubblesGap": 45.5,
+      "labelsGap": 39.7,
+      "fieldLabels": ["S3-51..60"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section4Part1Block": {
+      "origin": [102, 2132],
+      "bubblesGap": 46.4,
+      "labelsGap": 50.0,
+      "fieldLabels": ["S4-1..4"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section4Part2Block": {
+      "origin": [419, 2132],
+      "bubblesGap": 46.0,
+      "labelsGap": 49.8,
+      "fieldLabels": ["S4-5..8"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section4Part3Block": {
+      "origin": [699, 2130],
+      "bubblesGap": 46.6,
+      "labelsGap": 50.7,
+      "fieldLabels": ["S4-9..12"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section5Part1Block": {
+      "origin": [1022, 2135],
+      "bubblesGap": 45.5,
+      "labelsGap": 49.8,
+      "fieldLabels": ["S5-1..4"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section5Part2Block": {
+      "origin": [1290, 2132],
+      "bubblesGap": 46.0,
+      "labelsGap": 50.6,
+      "fieldLabels": ["S5-5..8"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section5Part3Block": {
+      "origin": [1617, 2132],
+      "bubblesGap": 46.0,
+      "labelsGap": 50.7,
+      "fieldLabels": ["S5-9..12"],
+      "fieldType": "QTYPE_MCQ4"
+    }
+  }
+}
