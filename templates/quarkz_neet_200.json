@@ -1,0 +1,73 @@
+{
+  "pageDimensions": [
+    1800,
+    2400
+  ],
+  "bubbleDimensions": [
+    23,
+    23
+  ],
+  "preProcessors": [
+  ],
+  "answerPosition": "right",
+  "drawFieldBlockBoxes": true,
+  "customLabels": {},
+  "fieldBlocks": {
+    "Q1_35Block": {
+      "origin": [258, 27],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q1..35"],
+      "bubblesGap": 68,
+      "labelsGap": 47
+    },
+    "Q36_50Block": {
+      "origin": [257, 1700],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q36..50"],
+      "bubblesGap": 68,
+      "labelsGap": 47
+    },
+    "Q51_85Block": {
+      "origin": [671, 27],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q51..85"],
+      "bubblesGap": 68,
+      "labelsGap": 47
+    },
+    "Q86_100Block": {
+      "origin": [676, 1700],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q86..100"],
+      "bubblesGap": 68,
+      "labelsGap": 46.9
+    },
+    "Q101_135Block": {
+      "origin": [1094, 27],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q101..135"],
+      "bubblesGap": 68,
+      "labelsGap": 47
+    },
+    "Q136_150Block": {
+      "origin": [1095, 1695],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q136..150"],
+      "bubblesGap": 68,
+      "labelsGap": 47
+    },
+    "Q151_185Block": {
+      "origin": [1514, 27],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q151..185"],
+      "bubblesGap": 72,
+      "labelsGap": 46.8
+    },
+    "Q186_200Block": {
+      "origin": [1514, 1695],
+      "fieldType": "QTYPE_MCQ4",
+      "fieldLabels": ["Q186..200"],
+      "bubblesGap": 71,
+      "labelsGap": 47
+    }
+  }
+}
