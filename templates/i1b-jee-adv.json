@@ -68,9 +68,9 @@
       "fieldType": "QTYPE_DIGIT"
     },
     "section3ABlock": {
-      "origin": [1020, 633],
-      "bubblesGap": 45.5,
-      "labelsGap": 40.6,
+      "origin": [1290, 630],
+      "bubblesGap": 47.0,
+      "labelsGap": 40.8,
       "fieldLabels": ["Q33..42"],
       "fieldType": "QTYPE_MCQ4"
     },
