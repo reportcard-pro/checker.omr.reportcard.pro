@@ -46,11 +46,18 @@
       "fieldLabels": ["Q1..20"],
       "fieldType": "QTYPE_MCQ4"
     },
-    "section1CBlock": {
-      "origin": [141, 1925],
-      "bubblesGap": 46.0,
+    "section1CPart1Block": {
+      "origin": [136, 1924],
+      "bubblesGap": 46.1,
       "labelsGap": 40.0,
-      "fieldLabels": ["Q21..25"],
+      "fieldLabels": ["Q21"],
+      "fieldType": "QTYPE_DIGIT"
+    },
+    "section1CPart2Block": {
+      "origin": [142, 1965],
+      "bubblesGap": 46.1,
+      "labelsGap": 40.8,
+      "fieldLabels": ["Q22..25"],
       "fieldType": "QTYPE_DIGIT"
     },
     "section2ABlock": {
@@ -60,11 +67,18 @@
       "fieldLabels": ["Q26..45"],
       "fieldType": "QTYPE_MCQ4"
     },
-    "section2CBlock": {
-      "origin": [739, 1924],
+    "section2CPart1Block": {
+      "origin": [735, 1925],
       "bubblesGap": 46.0,
       "labelsGap": 40.0,
-      "fieldLabels": ["Q46..50"],
+      "fieldLabels": ["Q46"],
+      "fieldType": "QTYPE_DIGIT"
+    },
+    "section2CPart2Block": {
+      "origin": [740, 1965],
+      "bubblesGap": 46.3,
+      "labelsGap": 40.6,
+      "fieldLabels": ["Q47..50"],
       "fieldType": "QTYPE_DIGIT"
     },
     "section3ABlock": {
@@ -74,11 +88,18 @@
       "fieldLabels": ["Q51..70"],
       "fieldType": "QTYPE_MCQ4"
     },
-    "section3CBlock": {
+    "section3CPart1Block": {
       "origin": [1332, 1923],
       "bubblesGap": 45.8,
       "labelsGap": 39.8,
-      "fieldLabels": ["Q71..75"],
+      "fieldLabels": ["Q71"],
+      "fieldType": "QTYPE_DIGIT"
+    },
+    "section3CPart2Block": {
+      "origin": [1338, 1964],
+      "bubblesGap": 46.2,
+      "labelsGap": 41.2,
+      "fieldLabels": ["Q72..75"],
       "fieldType": "QTYPE_DIGIT"
     }
   }
