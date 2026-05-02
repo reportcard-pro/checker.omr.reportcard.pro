@@ -103,7 +103,7 @@
       "fieldType": "QTYPE_MCQ4"
     },
     "section2APart2Block": {
-      "origin": [1290, 630],
+      "origin": [1020, 633],
       "bubblesGap": 47.0,
       "labelsGap": 40.8,
       "fieldLabels": ["Q87..106"],
@@ -152,7 +152,7 @@
       "fieldType": "QTYPE_DIGIT"
     },
     "section3APart1Block": {
-      "origin": [1020, 633],
+      "origin": [1298, 635],
       "bubblesGap": 45.5,
       "labelsGap": 40.6,
       "fieldLabels": ["Q133..152"],
