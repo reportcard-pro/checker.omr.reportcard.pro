@@ -1,0 +1,157 @@
+{
+  "pageDimensions": [
+    1800,
+    2400
+  ],
+  "bubbleDimensions": [
+    15,
+    15
+  ],
+  "preProcessors": [
+  ],
+  "answerPosition": "right",
+  "drawFieldBlockBoxes": true,
+  "customLabels": {
+    "rollNumber": ["rollNumber_1", "rollNumber_2", "rollNumber_3", "rollNumber_4", "rollNumber_5", "rollNumber_6", "rollNumber_7", "rollNumber_8", "rollNumber_9", "rollNumber_10", "rollNumber_11", "rollNumber_12", "rollNumber_13", "rollNumber_14", "rollNumber_15", "rollNumber_16", "rollNumber_17", "rollNumber_18", "rollNumber_19", "rollNumber_20"],
+    "qpCode": ["qpCode_1", "qpCode_2", "qpCode_3", "qpCode_4", "qpCode_5", "qpCode_6"],
+    "qpCode2": ["qpCode2_1"]
+  },
+  "fieldBlocks": {
+    "qpCodeBlock": {
+      "origin": [1064, 169],
+      "bubblesGap": 41.1,
+      "labelsGap": 46.4,
+      "fieldLabels": [
+        "qpCode_1",
+        "qpCode_2",
+        "qpCode_3",
+        "qpCode_4",
+        "qpCode_5",
+        "qpCode_6"
+      ],
+      "fieldType": "QTYPE_INT",
+      "answerPosition": "top"
+    },
+    "qpCode2Block": {
+      "origin": [1385, 171],
+      "bubblesGap": 41.1,
+      "labelsGap": 46.4,
+      "fieldLabels": ["qpCode2_1"],
+      "fieldType": "QTYPE_INT",
+      "answerPosition": "top"
+    },
+    "rollNumberBlock": {
+      "origin": [100, 169],
+      "bubblesGap": 40.8,
+      "labelsGap": 45.9,
+      "fieldLabels": ["rollNumber_1", "rollNumber_2", "rollNumber_3", "rollNumber_4", "rollNumber_5", "rollNumber_6", "rollNumber_7", "rollNumber_8", "rollNumber_9", "rollNumber_10", "rollNumber_11", "rollNumber_12", "rollNumber_13", "rollNumber_14", "rollNumber_15", "rollNumber_16", "rollNumber_17", "rollNumber_18", "rollNumber_19", "rollNumber_20"],
+      "fieldType": "QTYPE_INT",
+      "answerPosition": "top"
+    },
+    "section1Part1Block": {
+      "origin": [108, 640],
+      "bubblesGap": 46.1,
+      "labelsGap": 40.0,
+      "fieldLabels": ["Q1..15"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section1Part2Block": {
+      "origin": [429, 639],
+      "bubblesGap": 46.1,
+      "labelsGap": 40.2,
+      "fieldLabels": ["Q16..30"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section2Part1Block": {
+      "origin": [109, 1274],
+      "bubblesGap": 45.8,
+      "labelsGap": 40.2,
+      "fieldLabels": ["Q31..39"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section2Part2Block": {
+      "origin": [430, 1273],
+      "bubblesGap": 46.0,
+      "labelsGap": 40.2,
+      "fieldLabels": ["Q40..48"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section2Part3Block": {
+      "origin": [705, 1273],
+      "bubblesGap": 46.0,
+      "labelsGap": 40.0,
+      "fieldLabels": ["Q49..57"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section2Part4Block": {
+      "origin": [1030, 1274],
+      "bubblesGap": 45.7,
+      "labelsGap": 39.9,
+      "fieldLabels": ["Q58..65"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section3Part1Block": {
+      "origin": [108, 1668],
+      "bubblesGap": 45.8,
+      "labelsGap": 39.6,
+      "fieldLabels": ["Q66..70"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section3Part2Block": {
+      "origin": [432, 1669],
+      "bubblesGap": 45.8,
+      "labelsGap": 39.6,
+      "fieldLabels": ["Q71..75"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section3Part3Block": {
+      "origin": [705, 1667],
+      "bubblesGap": 45.9,
+      "labelsGap": 39.7,
+      "fieldLabels": ["Q76..80"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section4Part1Block": {
+      "origin": [108, 1898],
+      "bubblesGap": 45.8,
+      "labelsGap": 39.6,
+      "fieldLabels": ["Q81..85"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section4Part2Block": {
+      "origin": [432, 1898],
+      "bubblesGap": 45.8,
+      "labelsGap": 39.6,
+      "fieldLabels": ["Q86..90"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section4Part3Block": {
+      "origin": [705, 1898],
+      "bubblesGap": 45.9,
+      "labelsGap": 39.7,
+      "fieldLabels": ["Q91..95"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section5Part1Block": {
+      "origin": [108, 2128],
+      "bubblesGap": 45.8,
+      "labelsGap": 39.6,
+      "fieldLabels": ["Q96..100"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section5Part2Block": {
+      "origin": [432, 2128],
+      "bubblesGap": 45.8,
+      "labelsGap": 39.6,
+      "fieldLabels": ["Q101..105"],
+      "fieldType": "QTYPE_MCQ4"
+    },
+    "section5Part3Block": {
+      "origin": [705, 2128],
+      "bubblesGap": 45.9,
+      "labelsGap": 39.7,
+      "fieldLabels": ["Q106..110"],
+      "fieldType": "QTYPE_MCQ4"
+    }
+  }
+}
