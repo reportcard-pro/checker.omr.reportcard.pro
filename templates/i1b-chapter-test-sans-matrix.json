@@ -78,14 +78,7 @@
       "origin": [740, 1965],
       "bubblesGap": 46.3,
       "labelsGap": 40.6,
-      "fieldLabels": ["Q32..35"],
-      "fieldType": "QTYPE_DIGIT"
-    },
-    "section2CPart3Block": {
-      "origin": [740, 2127],
-      "bubblesGap": 46.3,
-      "labelsGap": 40.6,
-      "fieldLabels": ["Q36..40"],
+      "fieldLabels": ["Q32..40"],
       "fieldType": "QTYPE_DIGIT"
     },
     "section3APart1Block": {
