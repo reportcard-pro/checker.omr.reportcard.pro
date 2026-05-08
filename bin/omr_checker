@@ -102,6 +102,11 @@ if [ ! -d "$OMR_ROOT/outputs" ]; then
     mkdir -p "$OMR_ROOT/outputs"
 fi
 
+if [ ! -d "$OMR_ROOT/errors" ]; then
+    echo "Creating parent errors directory: $OMR_ROOT/errors"
+    mkdir -p "$OMR_ROOT/errors"
+fi
+
 # Delete existing directories if they exist
 if [ -d "$INPUT_DIR" ]; then
     echo "Removing existing input directory: $INPUT_DIR"
@@ -251,37 +256,30 @@ echo "======== END DIAGNOSTICS ========"
 # Use the provided Python path with no fallbacks
 PYTHON_CMD="$PYTHON_PATH $OMR_ROOT/main.py -i $INPUT_DIR -o $OUTPUT_DIR $PYTHON_ARGS"
 
-# Run with a virtual X display using direct Xvfb management
-XVFB_DISPLAY=":99"
-XVFB_CMD="Xvfb $XVFB_DISPLAY -screen 0 1920x1080x24 -ac"
-PYTHON_WITH_DISPLAY="DISPLAY=$XVFB_DISPLAY $PYTHON_CMD"
+# Run Python under xvfb-run, which provisions an isolated virtual X display
+# per invocation. --auto-display uses Xvfb's -displayfd to atomically pick
+# an unused display number, so concurrent invocations don't collide -- the
+# previous code hardcoded display :99 for every invocation, which caused
+# bulk OMR scan uploads to race on the shared display and fail
+# intermittently when one job killed the Xvfb another job was still using.
+# (--auto-servernum was avoided because it has a TOCTOU race in its lock-
+# file scan; --auto-display delegates to Xvfb itself which is race-free.)
+XVFB_RUN_CMD="xvfb-run --auto-display --server-args='-screen 0 1920x1080x24 -ac' --error-file=$OUTPUT_DIR/xvfb.log"
 
-echo "Starting Xvfb on display $XVFB_DISPLAY..."
-$XVFB_CMD > /dev/null 2>&1 &
-XVFB_PID=$!
-
-# Wait a moment for Xvfb to start
-sleep 2
-
-echo "Executing Python with display $XVFB_DISPLAY: $PYTHON_CMD"
+echo "Executing Python via xvfb-run: $PYTHON_CMD"
 echo "Output will be logged to: $LOG_FILE"
 
 # Create a direct console output for errors
 echo "Running Python command..."
-echo "Command: $PYTHON_WITH_DISPLAY" > "$LOG_FILE"
+echo "Command: $XVFB_RUN_CMD $PYTHON_CMD" > "$LOG_FILE"
 echo "Start time: $(date)" >> "$LOG_FILE"
 
-# Execute the command and capture the output
+# Execute the command and capture the output. xvfb-run handles Xvfb
+# lifecycle (startup readiness, teardown) so no manual sleep/kill is needed.
 set +e  # Temporarily disable exit on error
-eval $PYTHON_WITH_DISPLAY >> "$LOG_FILE" 2>&1
+eval $XVFB_RUN_CMD $PYTHON_CMD >> "$LOG_FILE" 2>&1
 COMMAND_STATUS=$?
 set -e  # Re-enable exit on error
-
-# Kill Xvfb process
-if [ -n "$XVFB_PID" ]; then
-    echo "Stopping Xvfb (PID: $XVFB_PID)..."
-    kill $XVFB_PID || true
-fi
 
 echo "OMR processing completed with exit code: $COMMAND_STATUS" | tee -a "$LOG_FILE"
 
@@ -347,7 +345,7 @@ else
     {
         echo "===== ERROR LOG FOR CHECKSUM: $CHECKSUM ====="
         echo "Timestamp: $(date)"
-        echo "Command: DISPLAY=$XVFB_DISPLAY $PYTHON_CMD"
+        echo "Command: $XVFB_RUN_CMD $PYTHON_CMD"
         echo "Exit code: $COMMAND_STATUS"
         echo ""
         echo "===== ENVIRONMENT ====="
@@ -355,7 +353,7 @@ else
         echo "INPUT_DIR: $INPUT_DIR"
         echo "OUTPUT_DIR: $OUTPUT_DIR"
         echo "PYTHON_PATH: $PYTHON_PATH"
-        echo "DISPLAY: $XVFB_DISPLAY"
+        echo "DISPLAY: (auto-allocated by xvfb-run)"
         echo "User/Group: $(id -u -n):$(id -g -n)"
         echo ""
         echo "===== INPUT DIRECTORY CONTENTS ====="
