@@ -7,15 +7,16 @@
 # Set the script to exit on error
 set -e
 
-# Verify xvfb-run runtime dependencies (xvfb-run requires xauth + mcookie at
-# runtime; on Debian/Ubuntu, mcookie ships in bsdextrautils which is NOT a
-# dependency of xvfb and is excluded by --no-install-recommends builds).
+# Verify xvfb-run runtime dependencies. On Debian/Ubuntu, xauth is in xvfb's
+# Recommends (not Depends), so it gets skipped by --no-install-recommends
+# builds and xvfb-run bails with "xauth command not found" mid-OMR-check.
+# (mcookie lives in util-linux, an essential package, so it's always present.)
 # Fail loudly with an actionable message instead of letting xvfb-run produce
-# a confusing exit-3 / silent crash mid-OMR-check.
-for _cmd in xvfb-run xauth mcookie; do
+# a confusing exit-3 / silent crash.
+for _cmd in xvfb-run xauth; do
     if ! command -v "$_cmd" >/dev/null 2>&1; then
-        echo "Error: '$_cmd' not found. xvfb-run requires xvfb-run + xauth + mcookie." >&2
-        echo "  On Debian/Ubuntu: apt-get install xvfb xauth bsdextrautils" >&2
+        echo "Error: '$_cmd' not found. xvfb-run requires xvfb-run + xauth." >&2
+        echo "  On Debian/Ubuntu: apt-get install xvfb xauth" >&2
         exit 1
     fi
 done
@@ -271,14 +272,18 @@ echo "======== END DIAGNOSTICS ========"
 PYTHON_CMD="$PYTHON_PATH $OMR_ROOT/main.py -i $INPUT_DIR -o $OUTPUT_DIR $PYTHON_ARGS"
 
 # Run Python under xvfb-run, which provisions an isolated virtual X display
-# per invocation. --auto-display uses Xvfb's -displayfd to atomically pick
-# an unused display number, so concurrent invocations don't collide -- the
-# previous code hardcoded display :99 for every invocation, which caused
-# bulk OMR scan uploads to race on the shared display and fail
-# intermittently when one job killed the Xvfb another job was still using.
-# (--auto-servernum was avoided because it has a TOCTOU race in its lock-
-# file scan; --auto-display delegates to Xvfb itself which is race-free.)
-XVFB_RUN_CMD="xvfb-run --auto-display --server-args='-screen 0 1920x1080x24 -ac' --error-file=$OUTPUT_DIR/xvfb.log"
+# per invocation. --auto-servernum picks an unused display number; the
+# previous code hardcoded :99 for every invocation, which caused bulk OMR
+# scan uploads to race on the shared display and fail intermittently when
+# one job killed the Xvfb another job was still using.
+#
+# Debian's xvfb-run script is patched with a retry-on-startup-failure loop
+# (see /usr/bin/xvfb-run on bookworm: tries=10 + AUTONUM check), so even if
+# two invocations both pick the same SERVERNUM via the lock-file scan, the
+# loser falls back to the next free number. Verified concurrent-safe on
+# Debian Bookworm; --auto-display would also work in principle but only
+# exists in xvfb-run >= 1.20.13 and is absent from Debian Bookworm's build.
+XVFB_RUN_CMD="xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24 -ac' --error-file=$OUTPUT_DIR/xvfb.log"
 
 echo "Executing Python via xvfb-run: $PYTHON_CMD"
 echo "Output will be logged to: $LOG_FILE"
