@@ -24,6 +24,8 @@ unset _cmd
 
 # Default values
 FORMAT="jee"
+FORMAT_EXPLICIT=0
+TEMPLATE_PATH=""
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OMR_ROOT="$(dirname "$SCRIPT_DIR")"
 STORE_FILE=""
@@ -41,6 +43,7 @@ usage() {
     echo "  --store-file       Path to the file to store in a unique folder"
     echo "  --checksum         Checksum to use for creating unique folder names (required)"
     echo "  --format           OMR format to use - 'jee' or 'neet' (determines template)"
+    echo "  --template-path    Path to a JSON template file (alternative to --format; mutually exclusive)"
     echo "  --field-blocks     JSON string of field blocks"
     echo "  --settings         JSON string of template-level setting overrides"
     echo "  -h, --help         Display this help message"
@@ -62,6 +65,11 @@ while [[ $# -gt 0 ]]; do
             ;;
         --format)
             FORMAT="$2"
+            FORMAT_EXPLICIT=1
+            shift 2
+            ;;
+        --template-path)
+            TEMPLATE_PATH="$2"
             shift 2
             ;;
         --python-path)
@@ -100,6 +108,11 @@ fi
 if [ -z "$PYTHON_PATH" ]; then
     echo "Error: --python-path is required"
     usage
+fi
+
+if [ "$FORMAT_EXPLICIT" -eq 1 ] && [ -n "$TEMPLATE_PATH" ]; then
+    echo "Error: --format and --template-path are mutually exclusive. Use one or the other." >&2
+    exit 2
 fi
 
 # Define input and output directories
@@ -149,16 +162,25 @@ else
     fi
 fi
 
-# Copy template based on format
-TEMPLATE_SOURCE="$OMR_ROOT/templates/$FORMAT.json"
+# Copy template based on --template-path or --format
 TEMPLATE_DEST="$INPUT_DIR/template.json"
 
-if [ -f "$TEMPLATE_SOURCE" ]; then
-    cp "$TEMPLATE_SOURCE" "$TEMPLATE_DEST"
-    echo "Using template: $FORMAT"
+if [ -n "$TEMPLATE_PATH" ]; then
+    if [ ! -f "$TEMPLATE_PATH" ]; then
+        echo "Error: Template file not found at '$TEMPLATE_PATH'" >&2
+        exit 1
+    fi
+    cp "$TEMPLATE_PATH" "$TEMPLATE_DEST"
+    echo "Using template path: $TEMPLATE_PATH"
 else
-    echo "Error: Template for format '$FORMAT' not found at $TEMPLATE_SOURCE"
-    exit 1
+    TEMPLATE_SOURCE="$OMR_ROOT/templates/$FORMAT.json"
+    if [ -f "$TEMPLATE_SOURCE" ]; then
+        cp "$TEMPLATE_SOURCE" "$TEMPLATE_DEST"
+        echo "Using template: $FORMAT"
+    else
+        echo "Error: Template for format '$FORMAT' not found at $TEMPLATE_SOURCE" >&2
+        exit 1
+    fi
 fi
 
 # Merge template-level settings if provided
