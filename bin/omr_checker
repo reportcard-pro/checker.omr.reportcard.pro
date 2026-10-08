@@ -293,19 +293,12 @@ echo "======== END DIAGNOSTICS ========"
 # Use the provided Python path with no fallbacks
 PYTHON_CMD="$PYTHON_PATH $OMR_ROOT/main.py -i $INPUT_DIR -o $OUTPUT_DIR $PYTHON_ARGS"
 
-# Run Python under xvfb-run, which provisions an isolated virtual X display
-# per invocation. --auto-servernum picks an unused display number; the
-# previous code hardcoded :99 for every invocation, which caused bulk OMR
-# scan uploads to race on the shared display and fail intermittently when
-# one job killed the Xvfb another job was still using.
-#
-# Debian's xvfb-run script is patched with a retry-on-startup-failure loop
-# (see /usr/bin/xvfb-run on bookworm: tries=10 + AUTONUM check), so even if
-# two invocations both pick the same SERVERNUM via the lock-file scan, the
-# loser falls back to the next free number. Verified concurrent-safe on
-# Debian Bookworm; --auto-display would also work in principle but only
-# exists in xvfb-run >= 1.20.13 and is absent from Debian Bookworm's build.
-XVFB_RUN_CMD="xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24 -ac' --error-file=$OUTPUT_DIR/xvfb.log"
+if xvfb-run --help 2>&1 | grep -q -- '--auto-display'; then
+    XVFB_DISPLAY_OPTION="--auto-display"
+else
+    XVFB_DISPLAY_OPTION="--auto-servernum"
+fi
+XVFB_RUN_CMD="xvfb-run $XVFB_DISPLAY_OPTION --server-args='-screen 0 1920x1080x24 -ac' --error-file=$OUTPUT_DIR/xvfb.log"
 
 echo "Executing Python via xvfb-run: $PYTHON_CMD"
 echo "Output will be logged to: $LOG_FILE"
