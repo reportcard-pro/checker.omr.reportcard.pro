@@ -125,3 +125,11 @@ def test_blank_rows_on_a_grey_blurry_sheet_read_blank(ops):
     ]
     for marks, _ in read_block(ops, grey_blank_rows * 4):
         assert not any(marks)
+
+
+@pytest.mark.parametrize("marked_rows", [6, 11])
+def test_fully_marked_dark_rows_at_the_block_start_read_all_marked(ops, marked_rows):
+    dark_row = [60.0, 70.0, 80.0, 75.0]
+    strips = [dark_row] * marked_rows + [BLANK_ROW] * (11 - marked_rows)
+    for marks, _ in read_block(ops, strips)[:marked_rows]:
+        assert all(marks)

@@ -816,7 +816,7 @@ class ImageInstanceOps:
         return float(np.percentile(unmarked_values, PAPER_LEVEL_PERCENTILE))
 
     def read_strip_against_paper(self, strip_vals, paper_level, page_thr):
-        if paper_level is None:
+        if paper_level is None or paper_level < page_thr - MARK_DEPTH_BELOW_ROUGH_PAPER:
             return strip_vals, page_thr, False
         fallback_thr = min(page_thr, paper_level - FAINT_MARK_MAX_DEPTH)
         not_bright_vals = [
