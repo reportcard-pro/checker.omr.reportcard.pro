@@ -245,6 +245,7 @@ class EvaluationConfig:
                     _final_marked,
                     _multi_marked,
                     _multi_roll,
+                    _faint_field_labels,
                 ) = template.image_instance_ops.read_omr_response(
                     template,
                     image=in_omr,

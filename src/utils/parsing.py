@@ -45,6 +45,23 @@ def get_concatenated_response(omr_response, template):
     return concatenated_response
 
 
+def get_uncertain_output_labels(field_labels, template):
+    output_labels = set()
+    for field_label in field_labels:
+        custom_label = next(
+            (
+                label
+                for label, keys in template.custom_labels.items()
+                if field_label in keys
+            ),
+            field_label,
+        )
+        output_labels.add(custom_label)
+    return ",".join(
+        label for label in template.output_columns if label in output_labels
+    )
+
+
 def open_config_with_defaults(config_path):
     user_tuning_config = load_json(config_path)
     user_tuning_config = OVERRIDE_MERGER.merge(

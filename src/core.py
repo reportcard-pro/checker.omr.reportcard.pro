@@ -12,6 +12,12 @@ from src.utils.image import CLAHE_HELPER, ImageUtils
 from src.utils.interaction import InteractionUtils
 
 PAPER_LEVEL_WINDOW_STRIPS = 5
+PAPER_LEVEL_PERCENTILE = 75
+SATURATED_INTENSITY = 254.5
+BRIGHT_BUBBLE_MARGIN = 15
+FAINT_MARK_MIN_DEPTH = 21
+FAINT_MARK_MAX_DEPTH = 32
+FAINT_MARK_MAX_STRIP_BUBBLES = 5
 
 
 class ImageInstanceOps:
@@ -268,9 +274,8 @@ class ImageInstanceOps:
             #     appendSaveImg(5,hist)
             #     appendSaveImg(2,hist)
 
-            paper_fallback_thrs = self.get_paper_fallback_thresholds(
-                all_q_strip_arrs, block_strip_ranges
-            )
+            paper_levels = self.get_paper_levels(all_q_strip_arrs, block_strip_ranges)
+            faint_field_labels = set()
 
             per_omr_threshold_avg, total_q_strip_no, total_q_box_no = 0, 0, 0
             for block_idx, field_block in enumerate(template.field_blocks):
@@ -307,9 +312,16 @@ class ImageInstanceOps:
                     )
                     # print(total_q_strip_no, field_block_bubbles[0].field_label,
                     #   all_q_std_vals[total_q_strip_no], "no_outliers:", no_outliers)
-                    per_q_strip_threshold = self.get_local_threshold(
+                    readable_vals, fallback_thr, is_faint = self.read_strip_against_paper(
                         all_q_strip_arrs[total_q_strip_no],
-                        min(effective_thr, paper_fallback_thrs[total_q_strip_no]),
+                        paper_levels[total_q_strip_no],
+                        effective_thr,
+                    )
+                    if is_faint:
+                        faint_field_labels.add(field_block_bubbles[0].field_label)
+                    per_q_strip_threshold = self.get_local_threshold(
+                        readable_vals,
+                        fallback_thr,
                         no_outliers,
                         f"Mean Intensity Histogram for {key}.{field_block_bubbles[0].field_label}.{block_q_strip_no}",
                         config.outputs.show_image_level >= 6,
@@ -595,7 +607,13 @@ class ImageInstanceOps:
                 for i in range(config.outputs.save_image_level):
                     self.save_image_stacks(i + 1, name, save_dir)
 
-            return omr_response, final_marked, multi_marked, multi_roll
+            return (
+                omr_response,
+                final_marked,
+                multi_marked,
+                multi_roll,
+                faint_field_labels,
+            )
 
         except Exception as e:
             raise e
@@ -765,26 +783,50 @@ class ImageInstanceOps:
 
         return global_thr, j_low, j_high
 
-    def get_paper_fallback_thresholds(self, all_q_strip_arrs, block_strip_ranges):
+    def get_paper_levels(self, all_q_strip_arrs, block_strip_ranges):
         window = PAPER_LEVEL_WINDOW_STRIPS
-        min_jump = self.tuning_config.threshold_params.MIN_JUMP
-        thresholds = []
+        paper_levels = []
         for block_start, block_end in block_strip_ranges:
-            strip_paper_levels = [
-                max(strip) if len(strip) >= 3 else None
-                for strip in all_q_strip_arrs[block_start:block_end]
-            ]
-            for i, paper_level in enumerate(strip_paper_levels):
-                nearby = [
-                    level
-                    for level in strip_paper_levels[max(0, i - window) : i + window + 1]
-                    if level is not None
+            strips = all_q_strip_arrs[block_start:block_end]
+            for i, strip in enumerate(strips):
+                nearby_values = [
+                    value
+                    for nearby_strip in strips[max(0, i - window) : i + window + 1]
+                    if len(nearby_strip) >= 3
+                    for value in nearby_strip
+                    if value < SATURATED_INTENSITY
                 ]
-                if paper_level is None or not nearby:
-                    thresholds.append(float("inf"))
-                    continue
-                thresholds.append(float(np.median(nearby)) - min_jump)
-        return thresholds
+                if len(strip) < 3:
+                    paper_levels.append(None)
+                elif not nearby_values:
+                    paper_levels.append(255.0)
+                else:
+                    paper_levels.append(
+                        float(np.percentile(nearby_values, PAPER_LEVEL_PERCENTILE))
+                    )
+        return paper_levels
+
+    def read_strip_against_paper(self, strip_vals, paper_level, page_thr):
+        if paper_level is None:
+            return strip_vals, page_thr, False
+        fallback_thr = min(
+            page_thr, paper_level - self.tuning_config.threshold_params.MIN_JUMP
+        )
+        not_bright_vals = [
+            value
+            for value in strip_vals
+            if value <= paper_level + BRIGHT_BUBBLE_MARGIN
+        ]
+        readable_vals = (
+            not_bright_vals
+            if 3 * len(not_bright_vals) >= 2 * len(strip_vals)
+            else strip_vals
+        )
+        is_faint = len(strip_vals) <= FAINT_MARK_MAX_STRIP_BUBBLES and any(
+            FAINT_MARK_MIN_DEPTH <= paper_level - value < FAINT_MARK_MAX_DEPTH
+            for value in strip_vals
+        )
+        return readable_vals, fallback_thr, is_faint
 
     def get_local_threshold(
         self, q_vals, global_thr, no_outliers, plot_title=None, plot_show=True
@@ -858,8 +900,9 @@ class ImageInstanceOps:
                 + config.threshold_params.CONFIDENT_SURPLUS
             )
             # If not confident, then only take help of global_thr
+            no_jump_found = max1 == config.threshold_params.MIN_JUMP
             if max1 < confident_jump:
-                if no_outliers:
+                if no_outliers or no_jump_found:
                     # All Black or All White case
                     thr1 = global_thr
                 else:

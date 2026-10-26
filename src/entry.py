@@ -23,7 +23,11 @@ from src.template import Template
 from src.utils.file import Paths, setup_dirs_for_paths, setup_outputs_for_template
 from src.utils.image import ImageUtils
 from src.utils.interaction import InteractionUtils, Stats
-from src.utils.parsing import get_concatenated_response, open_config_with_defaults
+from src.utils.parsing import (
+    get_concatenated_response,
+    get_uncertain_output_labels,
+    open_config_with_defaults,
+)
 
 # Load processors
 STATS = Stats()
@@ -258,6 +262,7 @@ def process_files(
             final_marked,
             multi_marked,
             _,
+            faint_field_labels,
         ) = template.image_instance_ops.read_omr_response(
             template, image=in_omr, name=file_id, save_dir=save_dir
         )
@@ -265,6 +270,7 @@ def process_files(
         # TODO: move inner try catch here
         # concatenate roll nos, set unmarked responses, etc
         omr_response = get_concatenated_response(response_dict, template)
+        uncertain = get_uncertain_output_labels(faint_field_labels, template)
 
         if (
             evaluation_config is None
@@ -297,6 +303,7 @@ def process_files(
         resp_array = []
         for k in template.output_columns:
             resp_array.append(omr_response[k])
+        resp_array.append(uncertain)
 
         outputs_namespace.OUTPUT_SET.append([file_name] + resp_array)
 
