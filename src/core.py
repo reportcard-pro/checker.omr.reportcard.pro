@@ -771,13 +771,18 @@ class ImageInstanceOps:
         thresholds = []
         for block_start, block_end in block_strip_ranges:
             strip_paper_levels = [
-                max(all_q_strip_arrs[i]) for i in range(block_start, block_end)
+                max(strip) if len(strip) >= 3 else None
+                for strip in all_q_strip_arrs[block_start:block_end]
             ]
-            for i in range(len(strip_paper_levels)):
-                if len(all_q_strip_arrs[block_start + i]) < 3:
+            for i, paper_level in enumerate(strip_paper_levels):
+                nearby = [
+                    level
+                    for level in strip_paper_levels[max(0, i - window) : i + window + 1]
+                    if level is not None
+                ]
+                if paper_level is None or not nearby:
                     thresholds.append(float("inf"))
                     continue
-                nearby = strip_paper_levels[max(0, i - window) : i + window + 1]
                 thresholds.append(float(np.median(nearby)) - min_jump)
         return thresholds
 

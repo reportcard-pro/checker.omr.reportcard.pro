@@ -68,3 +68,9 @@ def test_short_strips_keep_the_page_threshold(ops):
     assert fallbacks[0] == float("inf")
     assert fallbacks[1] == float("inf")
     assert min(PAGE_THRESHOLD, fallbacks[0]) == PAGE_THRESHOLD
+
+
+def test_short_strips_do_not_pull_down_their_neighbours_paper_level(ops):
+    strips = [[90.0, 85.0], [88.0], BLANK_ROW_TOP]
+    fallbacks = ops.get_paper_fallback_thresholds(strips, [(0, 3)])
+    assert fallbacks[2] == pytest.approx(229.2 - 25)
