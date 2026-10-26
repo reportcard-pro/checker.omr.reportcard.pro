@@ -11,6 +11,8 @@ from src.logger import logger
 from src.utils.image import CLAHE_HELPER, ImageUtils
 from src.utils.interaction import InteractionUtils
 
+PAPER_LEVEL_WINDOW_STRIPS = 5
+
 
 class ImageInstanceOps:
     """Class to hold fine-tuned utilities for a group of images. One instance for each processing directory."""
@@ -266,6 +268,10 @@ class ImageInstanceOps:
             #     appendSaveImg(5,hist)
             #     appendSaveImg(2,hist)
 
+            paper_fallback_thrs = self.get_paper_fallback_thresholds(
+                all_q_strip_arrs, block_strip_ranges
+            )
+
             per_omr_threshold_avg, total_q_strip_no, total_q_box_no = 0, 0, 0
             for block_idx, field_block in enumerate(template.field_blocks):
                 if template.per_block_threshold:
@@ -303,7 +309,7 @@ class ImageInstanceOps:
                     #   all_q_std_vals[total_q_strip_no], "no_outliers:", no_outliers)
                     per_q_strip_threshold = self.get_local_threshold(
                         all_q_strip_arrs[total_q_strip_no],
-                        effective_thr,
+                        min(effective_thr, paper_fallback_thrs[total_q_strip_no]),
                         no_outliers,
                         f"Mean Intensity Histogram for {key}.{field_block_bubbles[0].field_label}.{block_q_strip_no}",
                         config.outputs.show_image_level >= 6,
@@ -758,6 +764,27 @@ class ImageInstanceOps:
                 plt.show()
 
         return global_thr, j_low, j_high
+
+    def get_paper_fallback_thresholds(self, all_q_strip_arrs, block_strip_ranges):
+        window = PAPER_LEVEL_WINDOW_STRIPS
+        min_jump = self.tuning_config.threshold_params.MIN_JUMP
+        thresholds = []
+        for block_start, block_end in block_strip_ranges:
+            strip_paper_levels = [
+                max(strip) if len(strip) >= 3 else None
+                for strip in all_q_strip_arrs[block_start:block_end]
+            ]
+            for i, paper_level in enumerate(strip_paper_levels):
+                nearby = [
+                    level
+                    for level in strip_paper_levels[max(0, i - window) : i + window + 1]
+                    if level is not None
+                ]
+                if paper_level is None or not nearby:
+                    thresholds.append(float("inf"))
+                    continue
+                thresholds.append(float(np.median(nearby)) - min_jump)
+        return thresholds
 
     def get_local_threshold(
         self, q_vals, global_thr, no_outliers, plot_title=None, plot_show=True
