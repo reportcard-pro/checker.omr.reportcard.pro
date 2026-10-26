@@ -13,10 +13,12 @@ from src.utils.interaction import InteractionUtils
 
 PAPER_LEVEL_WINDOW_STRIPS = 5
 PAPER_LEVEL_PERCENTILE = 75
+ROUGH_PAPER_LEVEL_PERCENTILE = 90
+MARK_DEPTH_BELOW_ROUGH_PAPER = 50
 SATURATED_INTENSITY = 254.5
 BRIGHT_BUBBLE_MARGIN = 15
-FAINT_MARK_MIN_DEPTH = 21
-FAINT_MARK_MAX_DEPTH = 32
+FAINT_MARK_MIN_DEPTH = 24
+FAINT_MARK_MAX_DEPTH = 35
 FAINT_MARK_MAX_STRIP_BUBBLES = 5
 
 
@@ -801,17 +803,22 @@ class ImageInstanceOps:
                 elif not nearby_values:
                     paper_levels.append(255.0)
                 else:
-                    paper_levels.append(
-                        float(np.percentile(nearby_values, PAPER_LEVEL_PERCENTILE))
-                    )
+                    paper_levels.append(self.estimate_paper_level(nearby_values))
         return paper_levels
+
+    def estimate_paper_level(self, values):
+        rough_paper_level = float(np.percentile(values, ROUGH_PAPER_LEVEL_PERCENTILE))
+        unmarked_values = [
+            value
+            for value in values
+            if value >= rough_paper_level - MARK_DEPTH_BELOW_ROUGH_PAPER
+        ]
+        return float(np.percentile(unmarked_values, PAPER_LEVEL_PERCENTILE))
 
     def read_strip_against_paper(self, strip_vals, paper_level, page_thr):
         if paper_level is None:
             return strip_vals, page_thr, False
-        fallback_thr = min(
-            page_thr, paper_level - self.tuning_config.threshold_params.MIN_JUMP
-        )
+        fallback_thr = min(page_thr, paper_level - FAINT_MARK_MAX_DEPTH)
         not_bright_vals = [
             value
             for value in strip_vals

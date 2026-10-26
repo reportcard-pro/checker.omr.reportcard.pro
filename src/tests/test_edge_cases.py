@@ -76,7 +76,11 @@ def test_different_bubble_dimensions(mocker):
     exception = write_jsons_and_run(mocker, modify_template=modify_template)
     assert str(exception) == "No Error"
 
-    output_data = extract_output_data(BASE_RESULTS_CSV_PATH)
+    results_output_data = extract_output_data(BASE_RESULTS_CSV_PATH)
+
+    assert results_output_data.empty
+
+    output_data = extract_output_data(BASE_MULTIMARKED_CSV_PATH)
 
     equal_columns = [f"q{i}" for i in range(1, 18)]
     assert (

@@ -107,3 +107,21 @@ def test_short_strips_do_not_pull_down_their_neighbours_paper_level(ops):
     strips = [[90.0, 85.0], [88.0], BLANK_ROW]
     paper_levels = ops.get_paper_levels(strips, [(0, 3)])
     assert paper_levels[2] > 220
+
+
+@pytest.mark.parametrize("marked_rows", [5, 6, 8, 11])
+def test_dense_multi_correct_rows_with_varied_shading_read_at_the_block_start(ops, marked_rows):
+    multi_row = [110.0, 95.0, 130.0, 230.0]
+    strips = [multi_row] * marked_rows + [BLANK_ROW] * (11 - marked_rows)
+    for marks, _ in read_block(ops, strips)[:marked_rows]:
+        assert marks == [True, True, True, False]
+
+
+def test_blank_rows_on_a_grey_blurry_sheet_read_blank(ops):
+    grey_blank_rows = [
+        [193.8, 180.8, 186.0, 184.0],
+        [192.6, 182.3, 175.1, 185.7],
+        [190.2, 184.4, 181.0, 187.3],
+    ]
+    for marks, _ in read_block(ops, grey_blank_rows * 4):
+        assert not any(marks)
